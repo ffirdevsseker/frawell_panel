@@ -81,7 +81,7 @@ export function HBarChart({ title, subtitle, data }: HBarChartProps) {
           <Tooltip
             cursor={CURSOR_STYLE}
             contentStyle={TOOLTIP_STYLE}
-            formatter={(v: number) => [`${v} yanıt`, '']}
+            formatter={(v: any) => [`${v ?? 0} yanıt`, '']}
           />
           <Bar dataKey="value" radius={[0, 8, 8, 0]} barSize={22} background={{ fill: 'rgba(255,255,255,0.02)', radius: 8 }}>
             {sorted.map((entry, i) => (
