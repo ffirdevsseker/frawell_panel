@@ -1,6 +1,8 @@
 'use client'
 
 import { motion, AnimatePresence } from 'framer-motion'
+import { useTranslations, useLocale } from 'next-intl'
+import { Locale } from '@/i18n/config'
 
 interface ResponseFeedProps {
   responses: { id: string; text: string; created_at: string }[]
@@ -9,6 +11,9 @@ interface ResponseFeedProps {
 const AVATARS = ['🧑', '👩', '👨', '🧔', '👱', '🧕', '👳', '🧑‍💼']
 
 export default function ResponseFeed({ responses }: ResponseFeedProps) {
+  const t = useTranslations('dashboard.responseFeed')
+  const locale = useLocale() as Locale
+  const dateLocale = locale === 'en' ? 'en-US' : 'tr-TR'
   return (
     <motion.div
       initial={{ opacity: 0, y: 16 }}
@@ -20,9 +25,9 @@ export default function ResponseFeed({ responses }: ResponseFeedProps) {
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-amber-500/50 to-transparent" />
 
       <div className="mb-6 shrink-0">
-        <h3 className="text-base font-semibold text-slate-100 tracking-tight">Kullanıcı Geribildirimleri</h3>
+        <h3 className="text-base font-semibold text-slate-100 tracking-tight">{t('title')}</h3>
         <p className="text-sm text-slate-400 mt-1">
-          <span className="text-amber-400 font-semibold">{responses.length}</span> serbest metin yanıtı
+          <span className="text-amber-400 font-semibold">{responses.length}</span> {t('freeTextResponses')}
         </p>
       </div>
 
@@ -30,7 +35,7 @@ export default function ResponseFeed({ responses }: ResponseFeedProps) {
         {responses.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-8 text-center">
             <div className="text-3xl mb-2 opacity-30">💬</div>
-            <p className="text-xs text-slate-600">Henüz açık metin yanıtı yok</p>
+            <p className="text-xs text-slate-600">{t('empty')}</p>
           </div>
         ) : (
           <AnimatePresence initial={false}>
@@ -51,7 +56,7 @@ export default function ResponseFeed({ responses }: ResponseFeedProps) {
                     <div className="flex-1 min-w-0">
                       <p className="text-sm text-slate-300 leading-relaxed">{r.text}</p>
                       <p className="text-[11px] text-slate-600 mt-1.5">
-                        {new Date(r.created_at).toLocaleDateString('tr-TR', {
+                        {new Date(r.created_at).toLocaleDateString(dateLocale, {
                           day: 'numeric',
                           month: 'short',
                           hour: '2-digit',

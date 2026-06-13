@@ -1,6 +1,9 @@
 'use client'
 
+import { useTranslations, useLocale } from 'next-intl'
 import { SurveyData } from '@/types/survey'
+import { Locale } from '@/i18n/config'
+import { getOptionLabel } from '@/lib/optionLabels'
 
 interface Step4Props {
   data: SurveyData
@@ -29,12 +32,14 @@ function toggle<T>(arr: T[], item: T): T[] {
 }
 
 export default function Step4({ data, onChange }: Step4Props) {
+  const t = useTranslations('survey.step4')
+  const locale = useLocale() as Locale
   return (
     <div className="space-y-8">
       {/* Venue quit */}
       <div>
         <p className="text-xs font-semibold tracking-widest uppercase text-gray-400 mb-3">
-          Mekan seçerken ne zaman vazgeçiyorsun?
+          {t('venueQuitLabel')}
         </p>
         <div className="flex flex-wrap gap-2">
           {VENUE_QUIT.map((v) => (
@@ -44,7 +49,7 @@ export default function Step4({ data, onChange }: Step4Props) {
               onClick={() => onChange({ venue_quit: toggle(data.venue_quit, v) })}
               className={`chip${data.venue_quit.includes(v) ? ' selected' : ''}`}
             >
-              {v}
+              {getOptionLabel(v, locale)}
             </button>
           ))}
         </div>
@@ -53,7 +58,7 @@ export default function Step4({ data, onChange }: Step4Props) {
       {/* Missing filters */}
       <div>
         <p className="text-xs font-semibold tracking-widest uppercase text-gray-400 mb-3">
-          Kişisel tercihlerine göre mekan filtrelerken ne eksik kalıyor?
+          {t('missingFiltersLabel')}
         </p>
         <div className="flex flex-wrap gap-2">
           {MISSING_FILTERS.map((f) => (
@@ -63,7 +68,7 @@ export default function Step4({ data, onChange }: Step4Props) {
               onClick={() => onChange({ missing_filters: toggle(data.missing_filters, f) })}
               className={`chip${data.missing_filters.includes(f) ? ' selected' : ''}`}
             >
-              {f}
+              {getOptionLabel(f, locale)}
             </button>
           ))}
         </div>
@@ -72,13 +77,13 @@ export default function Step4({ data, onChange }: Step4Props) {
       {/* Experience note */}
       <div>
         <p className="text-xs font-semibold tracking-widest uppercase text-gray-400 mb-3">
-          Bir deneyimini anlat — planın tutmadığı bir an{' '}
-          <span className="normal-case font-normal">(opsiyonel)</span>
+          {t('experienceLabel')}{' '}
+          <span className="normal-case font-normal">({t('optional')})</span>
         </p>
         <textarea
           id="experience-note"
           rows={3}
-          placeholder="Örnek: Kafenin kapalı olduğunu kapıda öğrendim, 30 dk geri döndüm…"
+          placeholder={t('experiencePlaceholder')}
           value={data.experience_note}
           onChange={(e) => onChange({ experience_note: e.target.value })}
           className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm text-gray-700 placeholder:text-gray-300 focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 resize-none transition"

@@ -1,6 +1,9 @@
 'use client'
 
+import { useTranslations, useLocale } from 'next-intl'
 import { SurveyData } from '@/types/survey'
+import { Locale } from '@/i18n/config'
+import { getOptionLabel } from '@/lib/optionLabels'
 
 interface Step3Props {
   data: SurveyData
@@ -43,12 +46,14 @@ function toggle<T>(arr: T[], item: T): T[] {
 }
 
 export default function Step3({ data, onChange }: Step3Props) {
+  const t = useTranslations('survey.step3')
+  const locale = useLocale() as Locale
   return (
     <div className="space-y-8">
       {/* Decision method */}
       <div>
         <p className="text-xs font-semibold tracking-widest uppercase text-gray-400 mb-3">
-          Nereye gideceğine nasıl karar veriyorsun?
+          {t('decisionLabel')}
         </p>
         <div className="flex flex-wrap gap-2">
           {DECISION_METHODS.map((m) => (
@@ -58,7 +63,7 @@ export default function Step3({ data, onChange }: Step3Props) {
               onClick={() => onChange({ decision_method: toggle(data.decision_method, m) })}
               className={`chip${data.decision_method.includes(m) ? ' selected' : ''}`}
             >
-              {m}
+              {getOptionLabel(m, locale)}
             </button>
           ))}
         </div>
@@ -67,8 +72,8 @@ export default function Step3({ data, onChange }: Step3Props) {
       {/* Route problems — max 2 */}
       <div>
         <p className="text-xs font-semibold tracking-widest uppercase text-gray-400 mb-3">
-          Rota çizerken en çok hangi sorunla karşılaşıyorsun?{' '}
-          <span className="normal-case font-normal">(2 seçim)</span>
+          {t('routeProblemsLabel')}{' '}
+          <span className="normal-case font-normal">({t('twoChoices')})</span>
         </p>
         <div className="flex flex-wrap gap-2">
           {ROUTE_PROBLEMS.map((p) => (
@@ -80,7 +85,7 @@ export default function Step3({ data, onChange }: Step3Props) {
               }
               className={`chip${data.route_problems.includes(p) ? ' selected' : ''}`}
             >
-              {p}
+              {getOptionLabel(p, locale)}
             </button>
           ))}
         </div>
@@ -89,17 +94,17 @@ export default function Step3({ data, onChange }: Step3Props) {
       {/* Transport */}
       <div>
         <p className="text-xs font-semibold tracking-widest uppercase text-gray-400 mb-3">
-          Ulaşım tercihini ne belirliyor?
+          {t('transportLabel')}
         </p>
         <div className="flex flex-wrap gap-2">
-          {TRANSPORT_PREF.map((t) => (
+          {TRANSPORT_PREF.map((tp) => (
             <button
-              key={t}
-              id={`transport-${t.replace(/[\s/()]+/g, '-').toLowerCase().slice(0, 30)}`}
-              onClick={() => onChange({ transport_pref: toggle(data.transport_pref, t) })}
-              className={`chip${data.transport_pref.includes(t) ? ' selected' : ''}`}
+              key={tp}
+              id={`transport-${tp.replace(/[\s/()]+/g, '-').toLowerCase().slice(0, 30)}`}
+              onClick={() => onChange({ transport_pref: toggle(data.transport_pref, tp) })}
+              className={`chip${data.transport_pref.includes(tp) ? ' selected' : ''}`}
             >
-              {t}
+              {getOptionLabel(tp, locale)}
             </button>
           ))}
         </div>

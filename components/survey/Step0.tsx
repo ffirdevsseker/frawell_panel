@@ -1,7 +1,10 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { useTranslations, useLocale } from 'next-intl'
 import { SurveyData, TravelCompanion } from '@/types/survey'
+import { Locale } from '@/i18n/config'
+import { getOptionLabel } from '@/lib/optionLabels'
 
 interface Step0Props {
   data: SurveyData
@@ -40,6 +43,8 @@ const item = {
 }
 
 export default function Step0({ data, onChange }: Step0Props) {
+  const t = useTranslations('survey.step0')
+  const locale = useLocale() as Locale
   return (
     <motion.div
       variants={container}
@@ -49,7 +54,7 @@ export default function Step0({ data, onChange }: Step0Props) {
     >
       {/* Age */}
       <motion.div variants={item}>
-        <Section label="Yaş aralığın">
+        <Section label={t('ageLabel')}>
           <div className="flex flex-wrap gap-2">
             {AGE_RANGES.map((r) => (
               <button
@@ -67,7 +72,7 @@ export default function Step0({ data, onChange }: Step0Props) {
 
       {/* Gender */}
       <motion.div variants={item}>
-        <Section label="Cinsiyet (opsiyonel)">
+        <Section label={t('genderLabel')}>
           <div className="flex flex-wrap gap-2">
             {GENDERS.map((g) => (
               <button
@@ -76,7 +81,7 @@ export default function Step0({ data, onChange }: Step0Props) {
                 onClick={() => onChange({ gender: g })}
                 className={`chip${data.gender === g ? ' selected' : ''}`}
               >
-                {g}
+                {getOptionLabel(g, locale)}
               </button>
             ))}
           </div>
@@ -85,7 +90,7 @@ export default function Step0({ data, onChange }: Step0Props) {
 
       {/* City */}
       <motion.div variants={item}>
-        <Section label="Bulunduğun şehir">
+        <Section label={t('cityLabel')}>
           <div className="flex flex-wrap gap-2">
             {CITIES.map((c) => (
               <button
@@ -94,7 +99,7 @@ export default function Step0({ data, onChange }: Step0Props) {
                 onClick={() => onChange({ city: c })}
                 className={`chip${data.city === c ? ' selected' : ''}`}
               >
-                {c}
+                {getOptionLabel(c, locale)}
               </button>
             ))}
           </div>
@@ -103,7 +108,7 @@ export default function Step0({ data, onChange }: Step0Props) {
 
       {/* Travel companions */}
       <motion.div variants={item}>
-        <Section label="Genelde kiminle gezersin?">
+        <Section label={t('companionsLabel')}>
           <div className="flex flex-wrap gap-2">
             {COMPANIONS.map(({ label, icon }) => (
               <button
@@ -113,7 +118,7 @@ export default function Step0({ data, onChange }: Step0Props) {
                 className={`chip${data.travel_companions === label ? ' selected' : ''}`}
               >
                 <span>{icon}</span>
-                {label}
+                {getOptionLabel(label, locale)}
               </button>
             ))}
           </div>

@@ -1,4 +1,7 @@
 import { SurveyData } from '@/types/survey'
+import { Locale } from '@/i18n/config'
+import trMessages from '@/messages/tr.json'
+import enMessages from '@/messages/en.json'
 
 export interface TravelerPersona {
   key: string
@@ -8,64 +11,25 @@ export interface TravelerPersona {
   description: string
 }
 
-const PERSONAS: Record<string, TravelerPersona> = {
-  explorer: {
-    key: 'explorer',
-    emoji: '🧭',
-    title: 'Kaşif',
-    tagline: 'Haritanın dışına çıkmaktan korkmazsın',
-    description:
-      "Yeni sokaklar, bilinmeyen köşeler senin için bir davet. Frawell'in 7/24 AI rehberi, adım attığın her yerde hiç bilmediğin hikayeleri sana fısıldayacak.",
-  },
-  social: {
-    key: 'social',
-    emoji: '🎉',
-    title: 'Sosyal Kelebek',
-    tagline: 'En güzel anılar paylaşılan anılardır',
-    description:
-      'Gezmek senin için bir "biz" hikayesi. Frawell\'in grup planlama modu herkesi aynı sayfada tutarken, sen sadece eğlenceye odaklanırsın.',
-  },
-  foodie: {
-    key: 'foodie',
-    emoji: '🍜',
-    title: 'Lezzet Avcısı',
-    tagline: 'Rotanı midenin sesi çiziyor',
-    description:
-      "Bir şehri tadarak tanırsın. Travel DNA'n geliştikçe Frawell, o sokak arasındaki kahveciyi ya da gizli lokantayı tam sana göre önerecek.",
-  },
-  gamer: {
-    key: 'gamer',
-    emoji: '🎮',
-    title: 'Oyuncu Gezgin',
-    tagline: 'Her gezi senin için bir seviye',
-    description:
-      "Rozet, puan, görev — kulağına müzik gibi geliyor. Frawell'de attığın her adım 3D avatarını geliştirir, tamamladığın quest'ler seni gerçek ödüllere taşır.",
-  },
-  planner: {
-    key: 'planner',
-    emoji: '📋',
-    title: 'Usta Planlayıcı',
-    tagline: 'Her şey tek bir yerde toplanmalı',
-    description:
-      'Onlarca sekme açmak sana göre değil. Frawell; ulaşımdan rotaya, bütçeden check-in\'e kadar her şeyi tek ekranda topluyor.',
-  },
-  calm: {
-    key: 'calm',
-    emoji: '🌙',
-    title: 'Sakin Ruhlu',
-    tagline: 'Senin temponda, senin huzurunda',
-    description:
-      'Acele etmeden, kalabalıktan kaçarak keşfetmeyi seversin. Frawell, anlık kalabalık bilgisiyle sana en sakin köşeleri gösterecek.',
-  },
+const PERSONA_EMOJI: Record<string, string> = {
+  explorer: '🧭',
+  social: '🎉',
+  foodie: '🍜',
+  gamer: '🎮',
+  planner: '📋',
+  calm: '🌙',
 }
 
-const FALLBACK = PERSONAS.explorer
+const PERSONA_TEXT = { tr: trMessages.persona, en: enMessages.persona }
+
+const FALLBACK_KEY = 'explorer'
 
 /**
  * Anket cevaplarına göre eğlenceli bir "Gezgin Tipi" rozeti hesaplar.
  * Puanlama basittir: her ipucu ilgili kişiliğe puan ekler, en yükseği kazanır.
+ * Skorlama, veritabanında saklanan Türkçe değerler üzerinden çalışır ve dilden bağımsızdır.
  */
-export function computeTravelerPersona(data: SurveyData): TravelerPersona {
+export function computeTravelerPersona(data: SurveyData): { key: string } {
   const scores: Record<string, number> = {
     explorer: 0,
     social: 0,
@@ -96,7 +60,7 @@ export function computeTravelerPersona(data: SurveyData): TravelerPersona {
   if (data.outings_per_week <= 2) scores.calm += 1
   if (data.missing_filters.includes('Kalabalık bilgisi (şu an ne kadar dolu?)')) scores.calm += 1
 
-  let best = FALLBACK.key
+  let best = FALLBACK_KEY
   let bestScore = -1
   for (const [key, score] of Object.entries(scores)) {
     if (score > bestScore) {
@@ -105,9 +69,12 @@ export function computeTravelerPersona(data: SurveyData): TravelerPersona {
     }
   }
 
-  return PERSONAS[best] ?? FALLBACK
+  return { key: best }
 }
 
-export function getPersonaByKey(key: string): TravelerPersona {
-  return PERSONAS[key] ?? FALLBACK
+export function getPersonaByKey(key: string, locale: Locale): TravelerPersona {
+  const text = PERSONA_TEXT[locale]
+  const entry = (key in text ? text[key as keyof typeof text] : text[FALLBACK_KEY])
+  const emoji = PERSONA_EMOJI[key] ?? PERSONA_EMOJI[FALLBACK_KEY]
+  return { key, emoji, ...entry }
 }

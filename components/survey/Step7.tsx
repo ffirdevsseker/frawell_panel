@@ -18,7 +18,10 @@ import {
 } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { motion } from 'framer-motion'
+import { useTranslations, useLocale } from 'next-intl'
 import { SurveyData } from '@/types/survey'
+import { Locale } from '@/i18n/config'
+import { getOptionLabel } from '@/lib/optionLabels'
 
 interface Step7Props {
   data: SurveyData
@@ -47,18 +50,22 @@ const RANK_BG = [
 
 function SortableItem({
   id,
+  label,
   rank,
   isFirst,
   isLast,
   onMoveUp,
   onMoveDown,
+  t,
 }: {
   id: string
+  label: string
   rank: number
   isFirst: boolean
   isLast: boolean
   onMoveUp: () => void
   onMoveDown: () => void
+  t: ReturnType<typeof useTranslations>
 }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
     useSortable({ id })
@@ -86,7 +93,7 @@ function SortableItem({
         {...listeners}
         id={`drag-handle-${rank}`}
         className="flex-1 flex items-center gap-3 cursor-grab active:cursor-grabbing pb-1 pt-1"
-        aria-label="Sürükle"
+        aria-label={t('dragLabel')}
       >
         <button
           className="text-slate-400 hover:text-slate-600 p-1 -ml-2 shrink-0 pointer-events-none"
@@ -107,7 +114,7 @@ function SortableItem({
         </div>
 
         {/* Label */}
-        <span className="flex-1 text-sm text-slate-700 font-medium leading-snug">{id}</span>
+        <span className="flex-1 text-sm text-slate-700 font-medium leading-snug">{label}</span>
       </div>
 
       {/* Oklar */}
@@ -116,7 +123,7 @@ function SortableItem({
           onClick={(e) => { e.preventDefault(); e.stopPropagation(); onMoveUp(); }}
           disabled={isFirst}
           className="p-2 text-slate-400 hover:text-indigo-600 hover:bg-indigo-100 rounded-lg disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-slate-400 transition-colors"
-          title="Yukarı taşı"
+          title={t('moveUp')}
         >
           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 15l7-7 7 7" />
@@ -126,7 +133,7 @@ function SortableItem({
           onClick={(e) => { e.preventDefault(); e.stopPropagation(); onMoveDown(); }}
           disabled={isLast}
           className="p-2 text-slate-400 hover:text-indigo-600 hover:bg-indigo-100 rounded-lg disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-slate-400 transition-colors"
-          title="Aşağı taşı"
+          title={t('moveDown')}
         >
           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
@@ -138,6 +145,8 @@ function SortableItem({
 }
 
 export default function Step7({ data, onChange }: Step7Props) {
+  const t = useTranslations('survey.step7')
+  const locale = useLocale() as Locale
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -171,7 +180,7 @@ export default function Step7({ data, onChange }: Step7Props) {
       <div className="flex items-center gap-2 mb-5 p-3 rounded-xl bg-indigo-50 border border-indigo-100">
         <span className="text-lg">👆</span>
         <p className="text-xs text-indigo-700 font-medium">
-          Dilediğin gibi sürükle veya <span className="font-bold">sağdaki okları kullanarak</span> yerini değiştir.
+          {t('instructionPrefix')} <span className="font-bold">{t('instructionBold')}</span> {t('instructionSuffix')}
         </p>
       </div>
 
@@ -197,11 +206,13 @@ export default function Step7({ data, onChange }: Step7Props) {
               >
                 <SortableItem
                   id={feature}
+                  label={getOptionLabel(feature, locale)}
                   rank={i + 1}
                   isFirst={i === 0}
                   isLast={i === data.feature_ranking.length - 1}
                   onMoveUp={() => moveItem(i, 'up')}
                   onMoveDown={() => moveItem(i, 'down')}
+                  t={t}
                 />
               </motion.div>
             ))}

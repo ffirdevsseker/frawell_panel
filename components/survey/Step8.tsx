@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { useTranslations } from 'next-intl'
 import { SurveyData } from '@/types/survey'
 
 interface Step8Props {
@@ -8,30 +9,25 @@ interface Step8Props {
   onChange: (patch: Partial<SurveyData>) => void
 }
 
-const PERKS = [
-  { icon: '🚀', title: "Beta'ya ilk sen girersin", desc: 'Uygulama çıkmadan önce test et' },
-  { icon: '🎨', title: 'Seçimlerin ürünü şekillendirir', desc: 'Özellik önceliğini sen belirlersin' },
-  { icon: '🔕', title: 'Spam yok', desc: 'Sadece önemli gelişmelerde yazarız' },
-]
-
 export default function Step8({ data, onChange }: Step8Props) {
+  const t = useTranslations('survey.step8')
+  const perks = t.raw('perks') as { icon: string; title: string; desc: string }[]
   return (
     <div className="space-y-7">
       {/* Magic wand wish */}
       <div className="space-y-3">
         <p className="text-xs font-semibold tracking-widest uppercase text-slate-400">
-          Sihirli değnek 🪄
+          {t('magicWandLabel')}
         </p>
         <p className="text-sm text-slate-500 leading-relaxed">
-          Frawell&apos;de bir şeyi anında değiştirebilseydin — eksik bir özellik, çözülmesi gereken bir
-          sorun ya da{' '}
-          <span className="font-medium text-slate-700">&ldquo;şu olsaydı her şey değişirdi&rdquo;</span>{' '}
-          dedirten şey — ne olurdu?
+          {t('magicWandHelpPrefix')}{' '}
+          <span className="font-medium text-slate-700">{t('magicWandHelpQuote')}</span>{' '}
+          {t('magicWandHelpSuffix')}
         </p>
         <textarea
           id="magic-wand-wish"
           rows={4}
-          placeholder="Sihirli değneğini salla, hayalindeki özelliği yaz ✨"
+          placeholder={t('magicWandPlaceholder')}
           value={data.magic_wand_wish}
           onChange={(e) => onChange({ magic_wand_wish: e.target.value })}
           className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50/50 px-4 py-3.5 text-sm text-slate-700 placeholder:text-slate-300 focus:outline-none focus:border-indigo-400 focus:bg-white focus:ring-4 focus:ring-indigo-100 resize-none transition-all"
@@ -44,16 +40,16 @@ export default function Step8({ data, onChange }: Step8Props) {
       <div className="space-y-4">
         <div>
           <p className="text-xs font-semibold tracking-widest uppercase text-slate-400 mb-1">
-            Erken erişim
+            {t('earlyAccessLabel')}
           </p>
           <p className="text-base font-bold text-slate-900">
-            İlk kullananlar arasında ol ✨
+            {t('earlyAccessHeading')}
           </p>
         </div>
 
         {/* Perks */}
         <div className="space-y-2.5">
-          {PERKS.map((perk) => (
+          {perks.map((perk) => (
             <motion.div
               key={perk.title}
               whileHover={{ x: 3 }}
@@ -78,7 +74,7 @@ export default function Step8({ data, onChange }: Step8Props) {
           <input
             id="email-input"
             type="email"
-            placeholder="e-posta adresin"
+            placeholder={t('emailPlaceholder')}
             value={data.email}
             onChange={(e) => onChange({ email: e.target.value })}
             className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50/50 pl-10 pr-4 py-3.5 text-sm text-slate-700 placeholder:text-slate-300 focus:outline-none focus:border-indigo-400 focus:bg-white focus:ring-4 focus:ring-indigo-100 transition-all"
@@ -89,7 +85,7 @@ export default function Step8({ data, onChange }: Step8Props) {
           <svg className="w-3.5 h-3.5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
           </svg>
-          Bilgilerin üçüncü taraflarla paylaşılmaz. İstediğin zaman çıkabilirsin.
+          {t('privacyNote')}
         </p>
       </div>
     </div>

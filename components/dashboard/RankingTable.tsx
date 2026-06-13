@@ -1,6 +1,9 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { useTranslations, useLocale } from 'next-intl'
+import { Locale } from '@/i18n/config'
+import { getOptionLabel } from '@/lib/optionLabels'
 
 interface RankingTableProps {
   data: { feature: string; score: number; rank: number }[]
@@ -17,6 +20,8 @@ const BAR_GRADIENT = [
 ]
 
 export default function RankingTable({ data }: RankingTableProps) {
+  const t = useTranslations('dashboard.ranking')
+  const locale = useLocale() as Locale
   const max = data[0]?.score || 1
 
   return (
@@ -30,9 +35,9 @@ export default function RankingTable({ data }: RankingTableProps) {
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-500/50 to-transparent" />
 
       <div className="mb-6 shrink-0">
-        <h3 className="text-base font-semibold text-slate-100 tracking-tight">Özellik Öncelik Sıralaması</h3>
+        <h3 className="text-base font-semibold text-slate-100 tracking-tight">{t('title')}</h3>
         <p className="text-sm text-slate-400 mt-1">
-          Kullanıcı oylarıyla ağırlıklandırılmış puanlama
+          {t('subtitle')}
         </p>
       </div>
 
@@ -59,7 +64,7 @@ export default function RankingTable({ data }: RankingTableProps) {
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between mb-1.5">
                   <span className={`text-sm font-medium truncate ${i === 0 ? 'text-amber-300' : i === 1 ? 'text-slate-300' : 'text-slate-400'}`}>
-                    {item.feature}
+                    {getOptionLabel(item.feature, locale)}
                   </span>
                   <span className="text-xs font-bold text-slate-500 ml-2 shrink-0 tabular-nums">
                     {item.score} pt

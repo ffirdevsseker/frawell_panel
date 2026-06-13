@@ -14,6 +14,7 @@ import {
   CartesianGrid,
 } from 'recharts'
 import { motion } from 'framer-motion'
+import { useTranslations } from 'next-intl'
 
 const TOOLTIP_STYLE = {
   background: 'rgba(10,10,30,0.95)',
@@ -61,6 +62,7 @@ interface HBarChartProps {
 }
 
 export function HBarChart({ title, subtitle, data }: HBarChartProps) {
+  const t = useTranslations('dashboard.charts')
   const sorted = [...data].sort((a, b) => b.value - a.value).slice(0, 8)
   // Auto-scaling height based on items to fit symmetrically
   const height = Math.max(sorted.length * 40, 220)
@@ -81,7 +83,7 @@ export function HBarChart({ title, subtitle, data }: HBarChartProps) {
           <Tooltip
             cursor={CURSOR_STYLE}
             contentStyle={TOOLTIP_STYLE}
-            formatter={(v: any) => [`${v ?? 0} yanıt`, '']}
+            formatter={(v: any) => [`${v ?? 0} ${t('responseUnit')}`, '']}
           />
           <Bar dataKey="value" radius={[0, 8, 8, 0]} barSize={22} background={{ fill: 'rgba(255,255,255,0.02)', radius: 8 }}>
             {sorted.map((entry, i) => (
@@ -114,6 +116,7 @@ interface VBarChartProps {
 }
 
 export function VBarChart({ title, subtitle, data }: VBarChartProps) {
+  const t = useTranslations('dashboard.charts')
   return (
     <ChartCard title={title} subtitle={subtitle}>
       <ResponsiveContainer width="100%" height={260}>
@@ -133,7 +136,7 @@ export function VBarChart({ title, subtitle, data }: VBarChartProps) {
           <Tooltip
             cursor={CURSOR_STYLE}
             contentStyle={TOOLTIP_STYLE}
-            formatter={(v: any) => [`${v ?? 0} kişi`, '']}
+            formatter={(v: any) => [`${v ?? 0} ${t('personUnit')}`, '']}
           />
           <Bar dataKey="value" radius={[8, 8, 0, 0]} barSize={36}>
             {data.map((_, i) => (
@@ -167,6 +170,7 @@ const renderCustomLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent
 }
 
 export function PieChartCard({ title, subtitle, data }: PieChartCardProps) {
+  const t = useTranslations('dashboard.charts')
   return (
     <ChartCard title={title} subtitle={subtitle}>
       <ResponsiveContainer width="100%" height={260}>
@@ -190,7 +194,7 @@ export function PieChartCard({ title, subtitle, data }: PieChartCardProps) {
           </Pie>
           <Tooltip
             contentStyle={TOOLTIP_STYLE}
-            formatter={(v: any, name: any) => [`${v ?? 0} kişi`, name]}
+            formatter={(v: any, name: any) => [`${v ?? 0} ${t('personUnit')}`, name]}
           />
           <Legend
             wrapperStyle={{ fontSize: 11, color: '#94a3b8', paddingTop: 8 }}

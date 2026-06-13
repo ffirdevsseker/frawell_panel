@@ -1,7 +1,10 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { useTranslations, useLocale } from 'next-intl'
 import { SurveyData } from '@/types/survey'
+import { Locale } from '@/i18n/config'
+import { getOptionLabel } from '@/lib/optionLabels'
 
 interface Step1Props {
   data: SurveyData
@@ -45,6 +48,8 @@ const item = {
 }
 
 export default function Step1({ data, onChange }: Step1Props) {
+  const t = useTranslations('survey.step1')
+  const locale = useLocale() as Locale
   const sliderPct = (data.outings_per_week / 7) * 100
 
   return (
@@ -56,12 +61,12 @@ export default function Step1({ data, onChange }: Step1Props) {
     >
       {/* Slider */}
       <motion.div variants={item}>
-        <Section label="Haftada kaç kez dışarı çıkarsın?">
+        <Section label={t('outingsLabel')}>
           <div className="space-y-3">
             <div className="flex items-center justify-between text-xs text-slate-400">
-              <span>Neredeyse hiç</span>
+              <span>{t('almostNever')}</span>
               <span className="font-bold text-indigo-600 text-sm">
-                {data.outings_per_week} gün
+                {data.outings_per_week} {t('dayUnit')}
               </span>
             </div>
             <input
@@ -91,7 +96,7 @@ export default function Step1({ data, onChange }: Step1Props) {
 
       {/* App count */}
       <motion.div variants={item}>
-        <Section label="Yer bulmak için kaç farklı uygulama kullanıyorsun?">
+        <Section label={t('appCountLabel')}>
           <div className="flex flex-wrap gap-2">
             {APP_COUNTS.map((a) => (
               <button
@@ -100,7 +105,7 @@ export default function Step1({ data, onChange }: Step1Props) {
                 onClick={() => onChange({ app_count: a })}
                 className={`chip${data.app_count === a ? ' selected' : ''}`}
               >
-                {a}
+                {getOptionLabel(a, locale)}
               </button>
             ))}
           </div>
@@ -109,7 +114,7 @@ export default function Step1({ data, onChange }: Step1Props) {
 
       {/* Apps used */}
       <motion.div variants={item}>
-        <Section label="Şu an kullandığın uygulamalar (birden fazla)">
+        <Section label={t('appsUsedLabel')}>
           <div className="flex flex-wrap gap-2">
             {APPS.map(({ label, icon }) => (
               <button
@@ -119,7 +124,7 @@ export default function Step1({ data, onChange }: Step1Props) {
                 className={`chip${data.apps_used.includes(label) ? ' selected' : ''}`}
               >
                 <span>{icon}</span>
-                {label}
+                {getOptionLabel(label, locale)}
               </button>
             ))}
           </div>

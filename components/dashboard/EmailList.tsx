@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useTranslations } from 'next-intl'
 
 interface EmailListProps {
   emails: string[]
@@ -19,6 +20,7 @@ function downloadCSV(emails: string[]) {
 }
 
 export default function EmailList({ emails }: EmailListProps) {
+  const t = useTranslations('dashboard.emailList')
   const [copied, setCopied] = useState(false)
 
   function handleCopyAll() {
@@ -40,9 +42,9 @@ export default function EmailList({ emails }: EmailListProps) {
       {/* Header */}
       <div className="flex items-start justify-between mb-6 shrink-0">
         <div>
-          <h3 className="text-base font-semibold text-slate-100 tracking-tight">Erken Erişim Listesi</h3>
+          <h3 className="text-base font-semibold text-slate-100 tracking-tight">{t('title')}</h3>
           <p className="text-sm text-slate-400 mt-1">
-            <span className="text-emerald-400 font-semibold">{emails.length}</span> benzersiz katılımcı
+            <span className="text-emerald-400 font-semibold">{emails.length}</span> {t('uniqueParticipants')}
           </p>
         </div>
         {emails.length > 0 && (
@@ -51,14 +53,14 @@ export default function EmailList({ emails }: EmailListProps) {
               onClick={handleCopyAll}
               className="text-xs font-semibold text-slate-400 hover:text-white transition-colors px-3 py-2 rounded-xl border border-white/10 hover:border-white/20 hover:bg-white/5"
             >
-              {copied ? '✓ Kopyalandı' : 'Kopyala'}
+              {copied ? t('copied') : t('copy')}
             </button>
             <button
               id="btn-export-csv"
               onClick={() => downloadCSV(emails)}
               className="text-xs font-semibold text-emerald-400 hover:text-emerald-300 transition-colors px-3 py-2 rounded-xl border border-emerald-500/30 hover:border-emerald-500/60 hover:bg-emerald-500/5"
             >
-              ⬇ CSV İndir
+              {t('downloadCsv')}
             </button>
           </div>
         )}
@@ -69,7 +71,7 @@ export default function EmailList({ emails }: EmailListProps) {
         {emails.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-8 text-center">
             <div className="text-3xl mb-2 opacity-30">📭</div>
-            <p className="text-xs text-slate-600">Henüz e-posta yok</p>
+            <p className="text-xs text-slate-600">{t('empty')}</p>
           </div>
         ) : (
           <AnimatePresence initial={false}>

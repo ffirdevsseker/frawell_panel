@@ -1,7 +1,10 @@
 'use client'
 
 import { motion, AnimatePresence } from 'framer-motion'
+import { useTranslations, useLocale } from 'next-intl'
 import { AppealLevel, SurveyData } from '@/types/survey'
+import { Locale } from '@/i18n/config'
+import { getOptionLabel } from '@/lib/optionLabels'
 
 interface Step6Props {
   data: SurveyData
@@ -18,44 +21,17 @@ type AppealField =
 interface Scenario {
   key: AppealField
   icon: string
-  title: string
-  desc: string
 }
 
 const SCENARIOS: Scenario[] = [
-  {
-    key: 'ai_guide_appeal',
-    icon: '🎙️',
-    title: 'Cebinde, hiç susmayan bir gezi arkadaşın olsa…',
-    desc: "Gittiğin yerde sokağın hikayesini, az bilinen bir detayı ya da \"5 dakika ileride enfes bir simitçi var\" diye sesli anlatan bir AI rehber olsa, bu sence nasıl olurdu?",
-  },
-  {
-    key: 'personalization_appeal',
-    icon: '🧬',
-    title: 'Uygulama seni tanısa, herkese aynı şeyi önermese…',
-    desc: 'Zevklerini ve geçmiş gezilerini öğrenip sana özel mekan ve rota önerileri çıkaran bir "Gezi DNA\'n" olsa?',
-  },
-  {
-    key: 'gamification_appeal',
-    icon: '🎮',
-    title: 'Gezmek bir oyuna dönüşse…',
-    desc: 'Gittiğin yerlerde küçük görevler tamamlayıp puan, rozet kazansan ve arkadaşlarınla skorunu karşılaştırsan?',
-  },
+  { key: 'ai_guide_appeal', icon: '🎙️' },
+  { key: 'personalization_appeal', icon: '🧬' },
+  { key: 'gamification_appeal', icon: '🎮' },
 ]
 
-const AVATAR_SCENARIO: Scenario = {
-  key: 'avatar_quest_appeal',
-  icon: '🕹️',
-  title: 'Bu rozetler bir karaktere dönüşse…',
-  desc: "Kazandığın puan ve rozetlerle kendi 3D avatarını geliştirsen, onu yeni \"quest\"lere yollasan?",
-}
+const AVATAR_SCENARIO: Scenario = { key: 'avatar_quest_appeal', icon: '🕹️' }
 
-const LOCAL_DEALS_SCENARIO: Scenario = {
-  key: 'local_deals_appeal',
-  icon: '🏷️',
-  title: 'Tam o an, tam o yerde bir sürpriz çıksa…',
-  desc: 'Bulunduğun bölgedeki kafe, restoran ya da etkinliklerden anlık özel indirim ve fırsatlar görsen?',
-}
+const LOCAL_DEALS_SCENARIO: Scenario = { key: 'local_deals_appeal', icon: '🏷️' }
 
 const APPEAL_OPTIONS: { value: AppealLevel; emoji: string; variant: 'positive' | 'neutral' | 'negative' }[] = [
   { value: 'Kesinlikle isterim', emoji: '🤩', variant: 'positive' },
@@ -72,13 +48,15 @@ function ScenarioBlock({
   value: AppealLevel | null
   onSelect: (v: AppealLevel) => void
 }) {
+  const t = useTranslations('survey.step6.scenarios')
+  const locale = useLocale() as Locale
   return (
     <div className="scenario-card">
       <div className="flex items-start gap-3 mb-3.5">
         <div className="scenario-icon">{scenario.icon}</div>
         <div className="pt-0.5">
-          <p className="font-semibold text-sm text-slate-800 leading-snug">{scenario.title}</p>
-          <p className="text-xs text-slate-500 leading-relaxed mt-1">{scenario.desc}</p>
+          <p className="font-semibold text-sm text-slate-800 leading-snug">{t(`${scenario.key}.title`)}</p>
+          <p className="text-xs text-slate-500 leading-relaxed mt-1">{t(`${scenario.key}.desc`)}</p>
         </div>
       </div>
       <div className="space-y-2">
@@ -90,7 +68,7 @@ function ScenarioBlock({
             className={`chip-appeal${value === opt.value ? ` selected-${opt.variant}` : ''}`}
           >
             <span className="chip-appeal-emoji">{opt.emoji}</span>
-            {opt.value}
+            {getOptionLabel(opt.value, locale)}
           </button>
         ))}
       </div>

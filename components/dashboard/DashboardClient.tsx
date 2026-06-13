@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback } from 'react'
 import { motion } from 'framer-motion'
+import { useTranslations } from 'next-intl'
 import { supabase } from '@/lib/supabase'
 import StatCard from '@/components/dashboard/StatCard'
 import { HBarChart, VBarChart, PieChartCard } from '@/components/dashboard/Charts'
@@ -73,15 +74,6 @@ function isSameDay(a: Date, b: Date) {
     a.getDate() === b.getDate()
 }
 
-const PROBLEM_LABELS: Record<string, string> = {
-  'platform-kaosasi': 'Platform karmaşası',
-  'planlama-yorgunlugu': 'Planlama yorgunluğu',
-  'grup-koordinasyonu': 'Grup koordinasyonu',
-  'ilham-eksikligi': 'İlham eksikliği',
-  'butce-takibi': 'Bütçe takibi',
-  'kisisellestime-yok': 'Kişiselleştirme yok',
-}
-
 /* ── Skeleton ── */
 function Skeleton({ className = '' }: { className?: string }) {
   return (
@@ -90,6 +82,7 @@ function Skeleton({ className = '' }: { className?: string }) {
 }
 
 export default function DashboardClient() {
+  const t = useTranslations('dashboard')
   const [rows, setRows] = useState<DbResponse[]>([])
   const [loading, setLoading] = useState(true)
   const [newPing, setNewPing] = useState(false)
@@ -144,8 +137,9 @@ export default function DashboardClient() {
   const ageData = countArray(rows, 'age_range')
   const cityData = countArray(rows, 'city')
   const appsData = countArray(rows, 'apps_used')
+  const problemLabels = t.raw('problemLabels') as Record<string, string>
   const problemsData = countArray(rows, 'top_problems').map((p) => ({
-    ...p, name: PROBLEM_LABELS[p.name] || p.name,
+    ...p, name: problemLabels[p.name] || p.name,
   }))
   const transportData = countArray(rows, 'transport_pref')
   const missingFiltersData = countArray(rows, 'missing_filters')
@@ -162,7 +156,7 @@ export default function DashboardClient() {
           className="fixed top-20 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2 px-4 py-2.5 rounded-full bg-emerald-500 text-white text-sm font-semibold shadow-2xl"
         >
           <div className="w-2 h-2 rounded-full bg-white animate-pulse" />
-          Yeni yanıt geldi!
+          {t('toastNewResponse')}
         </motion.div>
       )}
 
@@ -170,95 +164,108 @@ export default function DashboardClient() {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
         <StatCard
           icon="📊"
-          label="Toplam Yanıt"
+          label={t('stats.totalResponses')}
           value={rows.length}
           gradient="from-indigo-500 to-violet-600"
           delay={0}
         />
         <StatCard
           icon="📅"
-          label="Bugün"
+          label={t('stats.today')}
           value={todayCount}
-          sub="yeni yanıt"
+          sub={t('stats.newResponses')}
           gradient="from-violet-500 to-purple-600"
           delay={0.08}
         />
         <StatCard
           icon="📬"
-          label="Erken Erişim"
+          label={t('stats.earlyAccess')}
           value={emails.length}
-          sub="benzersiz e-posta"
+          sub={t('stats.uniqueEmails')}
           gradient="from-emerald-500 to-teal-600"
           delay={0.16}
         />
         <StatCard
           icon="🪄"
-          label="Sihirli Dilek"
+          label={t('stats.magicWish')}
           value={openTexts.length}
-          sub="serbest metin"
+          sub={t('stats.freeText')}
           gradient="from-amber-500 to-orange-600"
           delay={0.24}
         />
       </div>
 
-      {/* Row 2: 3 Columns - Top Level Insights */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-1">
-          <PieChartCard 
-            title="Şehir Dağılımı" 
-            subtitle="Katılımcıların yaşadığı şehirler" 
-            data={cityData} 
-          />
+      {/* Demographics */}
+      <div className="space-y-4">
+        <h2 className="text-xs font-semibold tracking-widest uppercase text-slate-500 px-1">
+          {t('sections.demographics')}
+        </h2>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-1">
+            <PieChartCard
+              title={t('charts.cityTitle')}
+              subtitle={t('charts.citySubtitle')}
+              data={cityData}
+            />
+          </div>
+          <div className="lg:col-span-2">
+            <VBarChart
+              title={t('charts.ageTitle')}
+              subtitle={t('charts.ageSubtitle')}
+              data={ageData}
+            />
+          </div>
         </div>
-        <div className="lg:col-span-2">
+      </div>
+
+      {/* Behavior & Preferences */}
+      <div className="space-y-4">
+        <h2 className="text-xs font-semibold tracking-widest uppercase text-slate-500 px-1">
+          {t('sections.behavior')}
+        </h2>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2">
+            <RankingTable data={featureRanking} />
+          </div>
+          <div className="lg:col-span-1">
+            <HBarChart
+              title={t('charts.problemsTitle')}
+              subtitle={t('charts.problemsSubtitle')}
+              data={problemsData}
+            />
+          </div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <HBarChart
-            title="En Büyük Problemler"
-            subtitle="Kullanıcıların en önemli gördüğü 2 ana sorun"
-            data={problemsData}
+            title={t('charts.appsTitle')}
+            subtitle={t('charts.appsSubtitle')}
+            data={appsData}
+          />
+          <HBarChart
+            title={t('charts.transportTitle')}
+            subtitle={t('charts.transportSubtitle')}
+            data={transportData}
+          />
+          <HBarChart
+            title={t('charts.missingFiltersTitle')}
+            subtitle={t('charts.missingFiltersSubtitle')}
+            data={missingFiltersData}
           />
         </div>
       </div>
 
-      {/* Row 3: 3 Columns - Priority & Age */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2">
-          <RankingTable data={featureRanking} />
-        </div>
-        <div className="lg:col-span-1">
-          <VBarChart 
-            title="Yaş Dağılımı" 
-            subtitle="Hangi yaş gruplarından geliyorlar?" 
-            data={ageData} 
-          />
-        </div>
-      </div>
-
-      {/* Row 4: Secondary Bar Charts (3x) */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <HBarChart
-          title="Uygulamalar"
-          subtitle="Mevcut tercih edilen araçlar"
-          data={appsData}
-        />
-        <HBarChart
-          title="Ulaşım"
-          subtitle="Seyahatte öne çıkan etkenler"
-          data={transportData}
-        />
-        <HBarChart
-          title="Eksik Filtreler"
-          subtitle="Mekan ararken arananlar"
-          data={missingFiltersData}
-        />
-      </div>
-
-      {/* Row 5: Qualitative Data */}
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 pb-10">
-        <div className="lg:col-span-3">
-          <ResponseFeed responses={openTexts} />
-        </div>
-        <div className="lg:col-span-2">
-          <EmailList emails={emails} />
+      {/* Feedback */}
+      <div className="space-y-4 pb-10">
+        <h2 className="text-xs font-semibold tracking-widest uppercase text-slate-500 px-1">
+          {t('sections.feedback')}
+        </h2>
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+          <div className="lg:col-span-3">
+            <ResponseFeed responses={openTexts} />
+          </div>
+          <div className="lg:col-span-2">
+            <EmailList emails={emails} />
+          </div>
         </div>
       </div>
     </div>

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { AnimatePresence, motion, Variants } from 'framer-motion'
+import { useTranslations, useLocale } from 'next-intl'
 import Step0 from './Step0'
 import Step1 from './Step1'
 import Step2 from './Step2'
@@ -12,75 +13,23 @@ import Step6 from './Step6'
 import Step7 from './Step7'
 import Step8 from './Step8'
 import { SurveyData, INITIAL_SURVEY_DATA } from '@/types/survey'
-import { computeTravelerPersona } from '@/lib/persona'
+import { computeTravelerPersona, getPersonaByKey } from '@/lib/persona'
+import { Locale } from '@/i18n/config'
+import LanguageSwitcher from '@/components/LanguageSwitcher'
 
-const STEPS = [
-  {
-    number: 0,
-    emoji: '🧭',
-    title: 'Sen kimsin, kaşif?',
-    subtitle: 'Anonim · 2 dakika · Cevapların kimseyle paylaşılmaz',
-    cta: 'Devam et',
-  },
-  {
-    number: 1,
-    emoji: '🚶',
-    title: 'Hareket tarzın',
-    subtitle: 'Şehri nasıl deneyimlediğini öğrenelim',
-    cta: 'Devam et',
-  },
-  {
-    number: 2,
-    emoji: '✨',
-    title: 'Seni mutlu eden ne?',
-    subtitle: 'Bir gezide seni asıl mutlu eden şey ne?',
-    cta: 'Devam et',
-  },
-  {
-    number: 3,
-    emoji: '🗺️',
-    title: 'Yolda ne oluyor?',
-    subtitle: 'Bir yerden başka bir yere giderken nerede tıkanıyorsun?',
-    cta: 'Devam et',
-  },
-  {
-    number: 4,
-    emoji: '📍',
-    title: 'Mekan seçerken',
-    subtitle: 'Bir mekana karar verirken neler oluyor?',
-    cta: 'Devam et',
-  },
-  {
-    number: 5,
-    emoji: '⚡',
-    title: 'En büyük 2 derdin',
-    subtitle: 'En fazla 2 seçim — seçimlerin özellik önceliğimizi belirleyecek',
-    cta: 'Devam et',
-  },
-  {
-    number: 6,
-    emoji: '🔮',
-    title: "Frawell'i hayal et",
-    subtitle: 'Bunlar gerçek olsa, sence nasıl olur?',
-    cta: 'Devam et',
-  },
-  {
-    number: 7,
-    emoji: '🚀',
-    title: 'Ne önce gelsin?',
-    subtitle: 'Sürükleyerek sırala · En üstteki = en çok istediğin özellik',
-    cta: 'Bu sıralamayı gönder',
-  },
-  {
-    number: 8,
-    emoji: '🪄',
-    title: 'Son istasyon',
-    subtitle: 'Sihirli değneğin olsa ne değiştirirdin?',
-    cta: 'Gönder ve rozetini aç',
-  },
+const STEP_META = [
+  { number: 0, emoji: '🧭' },
+  { number: 1, emoji: '🚶' },
+  { number: 2, emoji: '✨' },
+  { number: 3, emoji: '🗺️' },
+  { number: 4, emoji: '📍' },
+  { number: 5, emoji: '⚡' },
+  { number: 6, emoji: '🔮' },
+  { number: 7, emoji: '🚀' },
+  { number: 8, emoji: '🪄' },
 ]
 
-const TOTAL = STEPS.length
+const TOTAL = STEP_META.length
 
 const pageVariants: Variants = {
   enter: (dir: number) => ({
@@ -105,6 +54,8 @@ const pageVariants: Variants = {
 const FLOATING_ICONS = ['✈️','🗺️','☕','🏙️','🚇','🍜','🎭','🌅','🧭','🏨','🎮','🏆','✨','📸']
 
 export default function SurveyShell() {
+  const t = useTranslations('survey')
+  const locale = useLocale() as Locale
   const [step, setStep] = useState(0)
   const [dir, setDir] = useState(1)
   const [data, setData] = useState<SurveyData>(INITIAL_SURVEY_DATA)
@@ -140,11 +91,11 @@ export default function SurveyShell() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       })
-      if (!res.ok) throw new Error('Gönderim başarısız')
+      if (!res.ok) throw new Error(t('errors.submitFailed'))
       setData(payload)
       setSubmitted(true)
     } catch {
-      setError('Bir hata oluştu, lütfen tekrar dene.')
+      setError(t('errors.generic'))
     } finally {
       setLoading(false)
     }
@@ -152,7 +103,7 @@ export default function SurveyShell() {
 
   // ── Thank you / Gezgin Tipi reveal screen ──
   if (submitted) {
-    const persona = computeTravelerPersona(data)
+    const persona = getPersonaByKey(computeTravelerPersona(data).key, locale)
     return (
       <div className="survey-bg min-h-screen flex items-center justify-center px-4 py-10 relative overflow-hidden">
         {mounted && FLOATING_ICONS.map((icon, i) => (
@@ -184,7 +135,7 @@ export default function SurveyShell() {
             transition={{ delay: 0.3 }}
           >
             <p className="text-[11px] font-semibold tracking-widest uppercase text-indigo-400 mb-1">
-              Gezgin Tipin
+              {t('thankYou.personaLabel')}
             </p>
             <h2 className="text-2xl font-bold text-slate-900 mb-1">{persona.title}</h2>
             <p className="text-sm font-medium gradient-text-teal mb-4">{persona.tagline}</p>
@@ -204,7 +155,7 @@ export default function SurveyShell() {
             transition={{ delay: 0.5 }}
             className="text-lg font-bold text-slate-900 mb-2"
           >
-            Süpersin, teşekkürler! 🎉
+            {t('thankYou.heading')}
           </motion.h3>
           <motion.p
             initial={{ opacity: 0, y: 10 }}
@@ -212,8 +163,7 @@ export default function SurveyShell() {
             transition={{ delay: 0.6 }}
             className="text-slate-500 text-sm leading-relaxed mb-6"
           >
-            Cevapların Frawell&apos;i şekillendiriyor. Şehri gerçekten anlayan, seni
-            gezdiren bir uygulama yapıyoruz — ve sen de bir parçasısın.
+            {t('thankYou.body')}
           </motion.p>
 
           {data.email && (
@@ -221,18 +171,35 @@ export default function SurveyShell() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7 }}
-              className="inline-flex items-center gap-2 text-xs font-medium text-indigo-700 bg-indigo-50 border border-indigo-200 rounded-full px-4 py-2"
+              className="inline-flex items-center gap-2 text-xs font-medium text-indigo-700 bg-indigo-50 border border-indigo-200 rounded-full px-4 py-2 mb-4"
             >
               <span>📬</span>
-              <span>{data.email} adresine haber vereceğiz</span>
+              <span>{t('thankYou.emailNotice', { email: data.email })}</span>
             </motion.div>
           )}
+
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8 }}
+          >
+            <a
+              href="/dashboard"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-indigo-600 hover:text-indigo-700 transition-colors"
+            >
+              {t('thankYou.dashboardCta')}
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+              </svg>
+            </a>
+          </motion.div>
         </motion.div>
       </div>
     )
   }
 
-  const current = STEPS[step]
+  const stepCopy = t.raw('steps') as { title: string; subtitle: string; cta: string }[]
+  const current = { ...STEP_META[step], ...stepCopy[step] }
 
   return (
     <div className="survey-bg min-h-screen relative overflow-hidden">
@@ -268,8 +235,11 @@ export default function SurveyShell() {
           </div>
           <span className="text-sm font-semibold text-slate-700">Frawell</span>
         </div>
-        <div className="text-xs text-slate-400 font-medium">
-          Durak {step + 1} / {TOTAL}
+        <div className="flex items-center gap-3">
+          <div className="text-xs text-slate-400 font-medium">
+            {t('topBarStop', { current: step + 1, total: TOTAL })}
+          </div>
+          <LanguageSwitcher />
         </div>
       </div>
 
@@ -284,7 +254,7 @@ export default function SurveyShell() {
                 className="journey-line-fill"
                 style={{ width: `${(step / (TOTAL - 1)) * 100}%` }}
               />
-              {STEPS.map((s, i) => (
+              {STEP_META.map((s, i) => (
                 <div
                   key={s.number}
                   className={`journey-stop${i < step ? ' done' : i === step ? ' active' : ''}`}
@@ -371,7 +341,7 @@ export default function SurveyShell() {
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
                   </svg>
-                  Geri
+                  {t('back')}
                 </button>
               ) : (
                 <div />
@@ -405,7 +375,7 @@ export default function SurveyShell() {
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                       </svg>
-                      Gönderiliyor…
+                      {t('submitting')}
                     </>
                   ) : (
                     <>

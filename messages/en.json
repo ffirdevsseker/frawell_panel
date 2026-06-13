@@ -1,0 +1,189 @@
+{
+  "meta": {
+    "title": "Frawell — Get to know your city better",
+    "description": "We're shaping the Frawell app together. Personalized routes, real-time venue info, and group planning — all in one screen."
+  },
+  "common": {
+    "appName": "Frawell",
+    "language": "Language"
+  },
+  "survey": {
+    "topBarStop": "Stop {current} / {total}",
+    "back": "Back",
+    "submitting": "Sending…",
+    "errors": {
+      "submitFailed": "Submission failed",
+      "generic": "Something went wrong, please try again."
+    },
+    "steps": [
+      { "title": "Who are you, explorer?", "subtitle": "Anonymous · 2 minutes · Your answers stay private", "cta": "Continue" },
+      { "title": "Your travel style", "subtitle": "Let's learn how you experience the city", "cta": "Continue" },
+      { "title": "What makes you happy?", "subtitle": "What truly makes a trip enjoyable for you?", "cta": "Continue" },
+      { "title": "What happens on the way?", "subtitle": "Where do you get stuck going from one place to another?", "cta": "Continue" },
+      { "title": "Choosing a venue", "subtitle": "What happens when you're deciding on a place?", "cta": "Continue" },
+      { "title": "Your top 2 pain points", "subtitle": "Pick up to 2 — your choices will shape our feature priorities", "cta": "Continue" },
+      { "title": "Imagine Frawell", "subtitle": "If these were real, what do you think?", "cta": "Continue" },
+      { "title": "What should come first?", "subtitle": "Drag to rank · Top item = the feature you want most", "cta": "Submit this ranking" },
+      { "title": "Last stop", "subtitle": "If you had a magic wand, what would you change?", "cta": "Submit and unlock your badge" }
+    ],
+    "step0": {
+      "ageLabel": "Your age range",
+      "genderLabel": "Gender (optional)",
+      "cityLabel": "City you're in",
+      "companionsLabel": "Who do you usually travel with?"
+    },
+    "step1": {
+      "outingsLabel": "How many times a week do you go out?",
+      "almostNever": "Almost never",
+      "dayUnit": "days",
+      "appCountLabel": "How many different apps do you use to find places?",
+      "appsUsedLabel": "Apps you currently use (select all that apply)"
+    },
+    "step2": {
+      "motivationsLabel": "What makes you happiest on a trip?",
+      "bonusLabel": "Bonus story",
+      "optional": "(optional)",
+      "memorableHelp": "What's the most memorable — or funniest — travel moment you've had?",
+      "memorablePlaceholder": "Example: I got on the wrong bus and discovered a café with the best view in the city…"
+    },
+    "step3": {
+      "decisionLabel": "How do you decide where to go?",
+      "routeProblemsLabel": "What problem do you run into most when planning a route?",
+      "twoChoices": "(2 choices)",
+      "transportLabel": "What determines your transport preference?"
+    },
+    "step4": {
+      "venueQuitLabel": "When do you give up on choosing a venue?",
+      "missingFiltersLabel": "What's missing when you filter venues based on your preferences?",
+      "experienceLabel": "Tell us about a time your plan didn't work out",
+      "optional": "(optional)",
+      "experiencePlaceholder": "Example: I found out at the door that the café was closed and turned back 30 minutes…"
+    },
+    "step5": {
+      "noneSelected": "Nothing selected yet",
+      "oneSelected": "1 selected · 1 more to go",
+      "twoSelected": "✓ Great! 2 selections done",
+      "problems": {
+        "platform-kaosasi": { "title": "Platform chaos", "desc": "Maps, hotels, tickets… I get lost switching between tabs" },
+        "planlama-yorgunlugu": { "title": "Planning fatigue", "desc": "Researching takes forever, so I end up giving up" },
+        "grup-koordinasyonu": { "title": "Group coordination", "desc": "Getting everyone on the same plan feels impossible" },
+        "ilham-eksikligi": { "title": "Lack of inspiration", "desc": "Figuring out where to go is harder than deciding" },
+        "butce-takibi": { "title": "Budget tracking", "desc": "Tracking expenses becomes a headache after the trip" },
+        "kisisellestime-yok": { "title": "No personalization", "desc": "Recommendations never match my taste, always too generic" }
+      }
+    },
+    "step6": {
+      "scenarios": {
+        "ai_guide_appeal": { "title": "What if you had a travel buddy in your pocket that never stops talking…", "desc": "What if an AI guide narrated the story of the street, a little-known detail, or said \"there's an amazing simit stand 5 minutes ahead\" out loud as you walked — how would that feel to you?" },
+        "personalization_appeal": { "title": "What if the app knew you, instead of recommending the same thing to everyone…", "desc": "What if you had a \"Travel DNA\" that learned your tastes and past trips to suggest places and routes made just for you?" },
+        "gamification_appeal": { "title": "What if traveling turned into a game…", "desc": "What if you completed small quests at the places you visit, earned points and badges, and compared scores with friends?" },
+        "avatar_quest_appeal": { "title": "What if those badges became a character…", "desc": "What if you used the points and badges you earned to level up your own 3D avatar and send it on new quests?" },
+        "local_deals_appeal": { "title": "What if a surprise appeared right there, right then…", "desc": "What if you saw instant special discounts and deals from cafés, restaurants, or events near you?" }
+      }
+    },
+    "step7": {
+      "instructionPrefix": "Drag freely, or use",
+      "instructionBold": "the arrows on the right",
+      "instructionSuffix": "to reorder.",
+      "dragLabel": "Drag",
+      "moveUp": "Move up",
+      "moveDown": "Move down"
+    },
+    "step8": {
+      "magicWandLabel": "Magic wand 🪄",
+      "magicWandHelpPrefix": "If you could instantly change one thing about Frawell — a missing feature, a problem to solve, or that one thing that makes you say",
+      "magicWandHelpQuote": "\"this would change everything\"",
+      "magicWandHelpSuffix": "— what would it be?",
+      "magicWandPlaceholder": "Wave your magic wand and write your dream feature ✨",
+      "earlyAccessLabel": "Early access",
+      "earlyAccessHeading": "Be among the first to try it ✨",
+      "emailPlaceholder": "your email address",
+      "privacyNote": "Your info is never shared with third parties. You can opt out anytime.",
+      "perks": [
+        { "icon": "🚀", "title": "You get into beta first", "desc": "Try it out before it launches" },
+        { "icon": "🎨", "title": "Your choices shape the product", "desc": "You decide our feature priorities" },
+        { "icon": "🔕", "title": "No spam", "desc": "We'll only email you for important updates" }
+      ]
+    },
+    "thankYou": {
+      "personaLabel": "Your traveler type",
+      "heading": "Awesome, thank you! 🎉",
+      "body": "Your answers are shaping Frawell. We're building an app that truly understands the city and takes you along for the ride — and you're part of it.",
+      "emailNotice": "We'll let you know at {email}",
+      "dashboardCta": "Go to analytics dashboard"
+    }
+  },
+  "dashboard": {
+    "badge": "Dashboard",
+    "title": "Founder Analytics Panel",
+    "live": "Live",
+    "surveyLink": "Go to survey",
+    "headingPrefix": "User",
+    "headingHighlight": "Orientation Analysis",
+    "subtitle": "Survey responses and market analysis — live sync via Supabase Realtime.",
+    "toastNewResponse": "New response received!",
+    "stats": {
+      "totalResponses": "Total Responses",
+      "today": "Today",
+      "newResponses": "new responses",
+      "earlyAccess": "Early Access",
+      "uniqueEmails": "unique emails",
+      "magicWish": "Magic Wishes",
+      "freeText": "free-text answers"
+    },
+    "sections": {
+      "demographics": "Demographics",
+      "behavior": "Behavior & Preferences",
+      "feedback": "Feedback"
+    },
+    "charts": {
+      "cityTitle": "City Distribution",
+      "citySubtitle": "Cities where participants live",
+      "problemsTitle": "Biggest Pain Points",
+      "problemsSubtitle": "Top 2 issues users care about most",
+      "ageTitle": "Age Distribution",
+      "ageSubtitle": "Which age groups are they from?",
+      "appsTitle": "Apps",
+      "appsSubtitle": "Currently preferred tools",
+      "transportTitle": "Transport",
+      "transportSubtitle": "Key factors when traveling",
+      "missingFiltersTitle": "Missing Filters",
+      "missingFiltersSubtitle": "What people look for when searching for places",
+      "responseUnit": "responses",
+      "personUnit": "people"
+    },
+    "ranking": {
+      "title": "Feature Priority Ranking",
+      "subtitle": "Score weighted by user votes"
+    },
+    "emailList": {
+      "title": "Early Access List",
+      "uniqueParticipants": "unique participants",
+      "copy": "Copy",
+      "copied": "✓ Copied",
+      "downloadCsv": "⬇ Download CSV",
+      "empty": "No emails yet"
+    },
+    "responseFeed": {
+      "title": "User Feedback",
+      "freeTextResponses": "free-text responses",
+      "empty": "No open-text responses yet"
+    },
+    "problemLabels": {
+      "platform-kaosasi": "Platform chaos",
+      "planlama-yorgunlugu": "Planning fatigue",
+      "grup-koordinasyonu": "Group coordination",
+      "ilham-eksikligi": "Lack of inspiration",
+      "butce-takibi": "Budget tracking",
+      "kisisellestime-yok": "No personalization"
+    }
+  },
+  "persona": {
+    "explorer": { "title": "Explorer", "tagline": "You're not afraid to go off the map", "description": "New streets and unknown corners are an invitation to you. Frawell's 24/7 AI guide will whisper stories you've never heard at every step you take." },
+    "social": { "title": "Social Butterfly", "tagline": "The best memories are shared memories", "description": "Traveling is a \"we\" story for you. Frawell's group planning mode keeps everyone on the same page, so you can just focus on the fun." },
+    "foodie": { "title": "Flavor Hunter", "tagline": "Your stomach draws your route", "description": "You get to know a city by tasting it. As your Travel DNA develops, Frawell will recommend that hidden café or restaurant down the street, picked just for you." },
+    "gamer": { "title": "Gamer Traveler", "tagline": "Every trip is a level for you", "description": "Badges, points, quests — music to your ears. Every step you take in Frawell levels up your 3D avatar, and the quests you complete bring real rewards." },
+    "planner": { "title": "Master Planner", "tagline": "Everything should be in one place", "description": "Opening dozens of tabs isn't your style. Frawell brings everything together in one screen — from transport to routes, budget to check-in." },
+    "calm": { "title": "Calm Spirit", "tagline": "At your own pace, in your own peace", "description": "You love exploring without rushing, away from the crowds. Frawell will show you the calmest corners with real-time crowd info." }
+  }
+}

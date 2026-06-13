@@ -1,13 +1,13 @@
-import type { Metadata } from 'next'
-import Link from 'next/link'
-import DashboardClient from '@/components/dashboard/DashboardClient'
+'use client'
 
-export const metadata: Metadata = {
-  title: 'Frawell Dashboard — Kurucu Görünümü',
-  description: 'Anket yanıtları ve kullanıcı yönelim analizi',
-}
+import Link from 'next/link'
+import { useTranslations } from 'next-intl'
+import DashboardClient from '@/components/dashboard/DashboardClient'
+import LanguageSwitcher from '@/components/LanguageSwitcher'
 
 export default function DashboardPage() {
+  const t = useTranslations('dashboard')
+
   return (
     <div className="dash-bg min-h-screen">
       {/* Sticky Header */}
@@ -23,10 +23,10 @@ export default function DashboardPage() {
               <div className="flex items-center gap-2">
                 <span className="text-white font-bold text-base tracking-tight">Frawell</span>
                 <span className="text-[10px] font-semibold text-indigo-400 bg-indigo-400/10 border border-indigo-400/20 px-2 py-0.5 rounded-full uppercase tracking-wide">
-                  Dashboard
+                  {t('badge')}
                 </span>
               </div>
-              <p className="text-slate-500 text-xs mt-0.5">Kurucu Analiz Paneli</p>
+              <p className="text-slate-500 text-xs mt-0.5">{t('title')}</p>
             </div>
           </div>
 
@@ -38,14 +38,16 @@ export default function DashboardPage() {
                 <div className="absolute inset-0 rounded-full bg-emerald-400 animate-ping opacity-75" />
                 <div className="relative w-2 h-2 rounded-full bg-emerald-400" />
               </div>
-              <span className="text-xs font-semibold text-emerald-400">Canlı</span>
+              <span className="text-xs font-semibold text-emerald-400">{t('live')}</span>
             </div>
+
+            <LanguageSwitcher variant="dark" />
 
             <Link
               href="/"
               className="flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors px-3 py-2 rounded-lg border border-white/10 hover:border-white/20 hover:bg-white/5"
             >
-              Ankete git
+              {t('surveyLink')}
               <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
               </svg>
@@ -59,11 +61,11 @@ export default function DashboardPage() {
         <div className="flex items-end justify-between">
           <div>
             <h1 className="text-3xl font-bold text-white tracking-tight">
-              Kullanıcı{' '}
-              <span className="gradient-text lg:mr-2">Yönelim Analizi</span>
+              {t('headingPrefix')}{' '}
+              <span className="gradient-text lg:mr-2">{t('headingHighlight')}</span>
             </h1>
             <p className="text-slate-400 text-sm mt-2 font-medium">
-              Anket yanıtları ve pazar analizleri — Supabase Realtime ile canlı senkronizasyon.
+              {t('subtitle')}
             </p>
           </div>
         </div>

@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { useTranslations } from 'next-intl'
 import { SurveyData } from '@/types/survey'
 
 interface Step5Props {
@@ -14,48 +15,36 @@ const PROBLEMS = [
     emoji: '🗺️',
     selectedBorder: 'border-indigo-500',
     selectedBg: 'from-indigo-50 to-blue-50',
-    title: 'Platform karmaşası',
-    desc: 'Harita, otel, bilet… sekmeler arasında kayboluyorum',
   },
   {
     id: 'planlama-yorgunlugu',
     emoji: '😫',
     selectedBorder: 'border-amber-500',
     selectedBg: 'from-amber-50 to-orange-50',
-    title: 'Planlama yorgunluğu',
-    desc: 'Araştırmak çok zaman alıyor, sonunda iptal ediyorum',
   },
   {
     id: 'grup-koordinasyonu',
     emoji: '👥',
     selectedBorder: 'border-violet-500',
     selectedBg: 'from-violet-50 to-purple-50',
-    title: 'Grup koordinasyonu',
-    desc: 'Herkesi aynı planda buluşturmak imkânsız gibi',
   },
   {
     id: 'ilham-eksikligi',
     emoji: '💡',
     selectedBorder: 'border-yellow-500',
     selectedBg: 'from-yellow-50 to-amber-50',
-    title: 'İlham eksikliği',
-    desc: 'Nereye gideceğimi bulmak, karar vermekten daha zor',
   },
   {
     id: 'butce-takibi',
     emoji: '💸',
     selectedBorder: 'border-emerald-500',
     selectedBg: 'from-emerald-50 to-teal-50',
-    title: 'Bütçe takibi',
-    desc: 'Harcamaları takip etmek gezi bittikten sonra baş ağrısı',
   },
   {
     id: 'kisisellestime-yok',
     emoji: '🎯',
     selectedBorder: 'border-rose-500',
     selectedBg: 'from-rose-50 to-pink-50',
-    title: 'Kişiselleştirme yok',
-    desc: 'Öneriler benim zevkime hiç uymuyor, hep genel kalıyor',
   },
 ]
 
@@ -69,6 +58,7 @@ const cardVariant = {
 }
 
 export default function Step5({ data, onChange }: Step5Props) {
+  const t = useTranslations('survey.step5')
   const selected = data.top_problems
 
   function toggle(id: string) {
@@ -83,12 +73,12 @@ export default function Step5({ data, onChange }: Step5Props) {
     <div>
       <div className="flex items-center gap-2 mb-5">
         <div className="text-xs font-medium text-slate-500">
-          {selected.length === 0 && 'Henüz seçilmedi'}
+          {selected.length === 0 && t('noneSelected')}
           {selected.length === 1 && (
-            <span className="text-indigo-600 font-semibold">1 seçildi · 1 hakkın daha var</span>
+            <span className="text-indigo-600 font-semibold">{t('oneSelected')}</span>
           )}
           {selected.length === 2 && (
-            <span className="text-emerald-600 font-semibold">✓ Harika! 2 seçim tamamlandı</span>
+            <span className="text-emerald-600 font-semibold">{t('twoSelected')}</span>
           )}
         </div>
       </div>
@@ -136,8 +126,8 @@ export default function Step5({ data, onChange }: Step5Props) {
               <div className={`text-3xl mb-2 transition-transform duration-200 ${isSelected ? 'scale-110' : ''}`}>
                 {p.emoji}
               </div>
-              <p className="font-semibold text-slate-800 text-sm mb-1 pr-6">{p.title}</p>
-              <p className="text-xs text-slate-500 leading-relaxed pr-6">{p.desc}</p>
+              <p className="font-semibold text-slate-800 text-sm mb-1 pr-6">{t(`problems.${p.id}.title`)}</p>
+              <p className="text-xs text-slate-500 leading-relaxed pr-6">{t(`problems.${p.id}.desc`)}</p>
             </motion.button>
           )
         })}

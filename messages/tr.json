@@ -1,0 +1,189 @@
+{
+  "meta": {
+    "title": "Frawell — Şehri daha iyi tanı",
+    "description": "Frawell uygulamasını birlikte şekillendiriyoruz. Sana özel rotalar, anlık mekan bilgisi ve grup planlaması — hepsi tek ekranda."
+  },
+  "common": {
+    "appName": "Frawell",
+    "language": "Dil"
+  },
+  "survey": {
+    "topBarStop": "Durak {current} / {total}",
+    "back": "Geri",
+    "submitting": "Gönderiliyor…",
+    "errors": {
+      "submitFailed": "Gönderim başarısız",
+      "generic": "Bir hata oluştu, lütfen tekrar dene."
+    },
+    "steps": [
+      { "title": "Sen kimsin, kaşif?", "subtitle": "Anonim · 2 dakika · Cevapların kimseyle paylaşılmaz", "cta": "Devam et" },
+      { "title": "Hareket tarzın", "subtitle": "Şehri nasıl deneyimlediğini öğrenelim", "cta": "Devam et" },
+      { "title": "Seni mutlu eden ne?", "subtitle": "Bir gezide seni asıl mutlu eden şey ne?", "cta": "Devam et" },
+      { "title": "Yolda ne oluyor?", "subtitle": "Bir yerden başka bir yere giderken nerede tıkanıyorsun?", "cta": "Devam et" },
+      { "title": "Mekan seçerken", "subtitle": "Bir mekana karar verirken neler oluyor?", "cta": "Devam et" },
+      { "title": "En büyük 2 derdin", "subtitle": "En fazla 2 seçim — seçimlerin özellik önceliğimizi belirleyecek", "cta": "Devam et" },
+      { "title": "Frawell'i hayal et", "subtitle": "Bunlar gerçek olsa, sence nasıl olur?", "cta": "Devam et" },
+      { "title": "Ne önce gelsin?", "subtitle": "Sürükleyerek sırala · En üstteki = en çok istediğin özellik", "cta": "Bu sıralamayı gönder" },
+      { "title": "Son istasyon", "subtitle": "Sihirli değneğin olsa ne değiştirirdin?", "cta": "Gönder ve rozetini aç" }
+    ],
+    "step0": {
+      "ageLabel": "Yaş aralığın",
+      "genderLabel": "Cinsiyet (opsiyonel)",
+      "cityLabel": "Bulunduğun şehir",
+      "companionsLabel": "Genelde kiminle gezersin?"
+    },
+    "step1": {
+      "outingsLabel": "Haftada kaç kez dışarı çıkarsın?",
+      "almostNever": "Neredeyse hiç",
+      "dayUnit": "gün",
+      "appCountLabel": "Yer bulmak için kaç farklı uygulama kullanıyorsun?",
+      "appsUsedLabel": "Şu an kullandığın uygulamalar (birden fazla)"
+    },
+    "step2": {
+      "motivationsLabel": "Bir gezide seni en çok ne mutlu eder?",
+      "bonusLabel": "Bonus hikaye",
+      "optional": "(opsiyonel)",
+      "memorableHelp": "En unutulmaz — ya da en çok güldüğün — seyahat anın ne oldu?",
+      "memorablePlaceholder": "Örnek: Yanlış otobüse binip şehrin en güzel manzaralı kafesini keşfettim…"
+    },
+    "step3": {
+      "decisionLabel": "Nereye gideceğine nasıl karar veriyorsun?",
+      "routeProblemsLabel": "Rota çizerken en çok hangi sorunla karşılaşıyorsun?",
+      "twoChoices": "(2 seçim)",
+      "transportLabel": "Ulaşım tercihini ne belirliyor?"
+    },
+    "step4": {
+      "venueQuitLabel": "Mekan seçerken ne zaman vazgeçiyorsun?",
+      "missingFiltersLabel": "Kişisel tercihlerine göre mekan filtrelerken ne eksik kalıyor?",
+      "experienceLabel": "Bir deneyimini anlat — planın tutmadığı bir an",
+      "optional": "(opsiyonel)",
+      "experiencePlaceholder": "Örnek: Kafenin kapalı olduğunu kapıda öğrendim, 30 dk geri döndüm…"
+    },
+    "step5": {
+      "noneSelected": "Henüz seçilmedi",
+      "oneSelected": "1 seçildi · 1 hakkın daha var",
+      "twoSelected": "✓ Harika! 2 seçim tamamlandı",
+      "problems": {
+        "platform-kaosasi": { "title": "Platform karmaşası", "desc": "Harita, otel, bilet… sekmeler arasında kayboluyorum" },
+        "planlama-yorgunlugu": { "title": "Planlama yorgunluğu", "desc": "Araştırmak çok zaman alıyor, sonunda iptal ediyorum" },
+        "grup-koordinasyonu": { "title": "Grup koordinasyonu", "desc": "Herkesi aynı planda buluşturmak imkânsız gibi" },
+        "ilham-eksikligi": { "title": "İlham eksikliği", "desc": "Nereye gideceğimi bulmak, karar vermekten daha zor" },
+        "butce-takibi": { "title": "Bütçe takibi", "desc": "Harcamaları takip etmek gezi bittikten sonra baş ağrısı" },
+        "kisisellestime-yok": { "title": "Kişiselleştirme yok", "desc": "Öneriler benim zevkime hiç uymuyor, hep genel kalıyor" }
+      }
+    },
+    "step6": {
+      "scenarios": {
+        "ai_guide_appeal": { "title": "Cebinde, hiç susmayan bir gezi arkadaşın olsa…", "desc": "Gittiğin yerde sokağın hikayesini, az bilinen bir detayı ya da \"5 dakika ileride enfes bir simitçi var\" diye sesli anlatan bir AI rehber olsa, bu sence nasıl olurdu?" },
+        "personalization_appeal": { "title": "Uygulama seni tanısa, herkese aynı şeyi önermese…", "desc": "Zevklerini ve geçmiş gezilerini öğrenip sana özel mekan ve rota önerileri çıkaran bir \"Gezi DNA'n\" olsa?" },
+        "gamification_appeal": { "title": "Gezmek bir oyuna dönüşse…", "desc": "Gittiğin yerlerde küçük görevler tamamlayıp puan, rozet kazansan ve arkadaşlarınla skorunu karşılaştırsan?" },
+        "avatar_quest_appeal": { "title": "Bu rozetler bir karaktere dönüşse…", "desc": "Kazandığın puan ve rozetlerle kendi 3D avatarını geliştirsen, onu yeni \"quest\"lere yollasan?" },
+        "local_deals_appeal": { "title": "Tam o an, tam o yerde bir sürpriz çıksa…", "desc": "Bulunduğun bölgedeki kafe, restoran ya da etkinliklerden anlık özel indirim ve fırsatlar görsen?" }
+      }
+    },
+    "step7": {
+      "instructionPrefix": "Dilediğin gibi sürükle veya",
+      "instructionBold": "sağdaki okları kullanarak",
+      "instructionSuffix": "yerini değiştir.",
+      "dragLabel": "Sürükle",
+      "moveUp": "Yukarı taşı",
+      "moveDown": "Aşağı taşı"
+    },
+    "step8": {
+      "magicWandLabel": "Sihirli değnek 🪄",
+      "magicWandHelpPrefix": "Frawell'de bir şeyi anında değiştirebilseydin — eksik bir özellik, çözülmesi gereken bir sorun ya da",
+      "magicWandHelpQuote": "\"şu olsaydı her şey değişirdi\"",
+      "magicWandHelpSuffix": "dedirten şey — ne olurdu?",
+      "magicWandPlaceholder": "Sihirli değneğini salla, hayalindeki özelliği yaz ✨",
+      "earlyAccessLabel": "Erken erişim",
+      "earlyAccessHeading": "İlk kullananlar arasında ol ✨",
+      "emailPlaceholder": "e-posta adresin",
+      "privacyNote": "Bilgilerin üçüncü taraflarla paylaşılmaz. İstediğin zaman çıkabilirsin.",
+      "perks": [
+        { "icon": "🚀", "title": "Beta'ya ilk sen girersin", "desc": "Uygulama çıkmadan önce test et" },
+        { "icon": "🎨", "title": "Seçimlerin ürünü şekillendirir", "desc": "Özellik önceliğini sen belirlersin" },
+        { "icon": "🔕", "title": "Spam yok", "desc": "Sadece önemli gelişmelerde yazarız" }
+      ]
+    },
+    "thankYou": {
+      "personaLabel": "Gezgin Tipin",
+      "heading": "Süpersin, teşekkürler! 🎉",
+      "body": "Cevapların Frawell'i şekillendiriyor. Şehri gerçekten anlayan, seni gezdiren bir uygulama yapıyoruz — ve sen de bir parçasısın.",
+      "emailNotice": "{email} adresine haber vereceğiz",
+      "dashboardCta": "Analiz paneline git"
+    }
+  },
+  "dashboard": {
+    "badge": "Dashboard",
+    "title": "Kurucu Analiz Paneli",
+    "live": "Canlı",
+    "surveyLink": "Ankete git",
+    "headingPrefix": "Kullanıcı",
+    "headingHighlight": "Yönelim Analizi",
+    "subtitle": "Anket yanıtları ve pazar analizleri — Supabase Realtime ile canlı senkronizasyon.",
+    "toastNewResponse": "Yeni yanıt geldi!",
+    "stats": {
+      "totalResponses": "Toplam Yanıt",
+      "today": "Bugün",
+      "newResponses": "yeni yanıt",
+      "earlyAccess": "Erken Erişim",
+      "uniqueEmails": "benzersiz e-posta",
+      "magicWish": "Sihirli Dilek",
+      "freeText": "serbest metin"
+    },
+    "sections": {
+      "demographics": "Demografi",
+      "behavior": "Davranış & Tercihler",
+      "feedback": "Geri Bildirim"
+    },
+    "charts": {
+      "cityTitle": "Şehir Dağılımı",
+      "citySubtitle": "Katılımcıların yaşadığı şehirler",
+      "problemsTitle": "En Büyük Problemler",
+      "problemsSubtitle": "Kullanıcıların en önemli gördüğü 2 ana sorun",
+      "ageTitle": "Yaş Dağılımı",
+      "ageSubtitle": "Hangi yaş gruplarından geliyorlar?",
+      "appsTitle": "Uygulamalar",
+      "appsSubtitle": "Mevcut tercih edilen araçlar",
+      "transportTitle": "Ulaşım",
+      "transportSubtitle": "Seyahatte öne çıkan etkenler",
+      "missingFiltersTitle": "Eksik Filtreler",
+      "missingFiltersSubtitle": "Mekan ararken arananlar",
+      "responseUnit": "yanıt",
+      "personUnit": "kişi"
+    },
+    "ranking": {
+      "title": "Özellik Öncelik Sıralaması",
+      "subtitle": "Kullanıcı oylarıyla ağırlıklandırılmış puanlama"
+    },
+    "emailList": {
+      "title": "Erken Erişim Listesi",
+      "uniqueParticipants": "benzersiz katılımcı",
+      "copy": "Kopyala",
+      "copied": "✓ Kopyalandı",
+      "downloadCsv": "⬇ CSV İndir",
+      "empty": "Henüz e-posta yok"
+    },
+    "responseFeed": {
+      "title": "Kullanıcı Geribildirimleri",
+      "freeTextResponses": "serbest metin yanıtı",
+      "empty": "Henüz açık metin yanıtı yok"
+    },
+    "problemLabels": {
+      "platform-kaosasi": "Platform karmaşası",
+      "planlama-yorgunlugu": "Planlama yorgunluğu",
+      "grup-koordinasyonu": "Grup koordinasyonu",
+      "ilham-eksikligi": "İlham eksikliği",
+      "butce-takibi": "Bütçe takibi",
+      "kisisellestime-yok": "Kişiselleştirme yok"
+    }
+  },
+  "persona": {
+    "explorer": { "title": "Kaşif", "tagline": "Haritanın dışına çıkmaktan korkmazsın", "description": "Yeni sokaklar, bilinmeyen köşeler senin için bir davet. Frawell'in 7/24 AI rehberi, adım attığın her yerde hiç bilmediğin hikayeleri sana fısıldayacak." },
+    "social": { "title": "Sosyal Kelebek", "tagline": "En güzel anılar paylaşılan anılardır", "description": "Gezmek senin için bir \"biz\" hikayesi. Frawell'in grup planlama modu herkesi aynı sayfada tutarken, sen sadece eğlenceye odaklanırsın." },
+    "foodie": { "title": "Lezzet Avcısı", "tagline": "Rotanı midenin sesi çiziyor", "description": "Bir şehri tadarak tanırsın. Travel DNA'n geliştikçe Frawell, o sokak arasındaki kahveciyi ya da gizli lokantayı tam sana göre önerecek." },
+    "gamer": { "title": "Oyuncu Gezgin", "tagline": "Her gezi senin için bir seviye", "description": "Rozet, puan, görev — kulağına müzik gibi geliyor. Frawell'de attığın her adım 3D avatarını geliştirir, tamamladığın quest'ler seni gerçek ödüllere taşır." },
+    "planner": { "title": "Usta Planlayıcı", "tagline": "Her şey tek bir yerde toplanmalı", "description": "Onlarca sekme açmak sana göre değil. Frawell; ulaşımdan rotaya, bütçeden check-in'e kadar her şeyi tek ekranda topluyor." },
+    "calm": { "title": "Sakin Ruhlu", "tagline": "Senin temponda, senin huzurunda", "description": "Acele etmeden, kalabalıktan kaçarak keşfetmeyi seversin. Frawell, anlık kalabalık bilgisiyle sana en sakin köşeleri gösterecek." }
+  }
+}
