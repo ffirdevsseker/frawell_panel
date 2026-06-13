@@ -133,7 +133,7 @@ export function VBarChart({ title, subtitle, data }: VBarChartProps) {
           <Tooltip
             cursor={CURSOR_STYLE}
             contentStyle={TOOLTIP_STYLE}
-            formatter={(v: number) => [`${v} kişi`, '']}
+            formatter={(v: any) => [`${v ?? 0} kişi`, '']}
           />
           <Bar dataKey="value" radius={[8, 8, 0, 0]} barSize={36}>
             {data.map((_, i) => (
