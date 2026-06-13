@@ -3,36 +3,37 @@
 import { motion } from 'framer-motion'
 import { SurveyData } from '@/types/survey'
 
-interface StepFourProps {
+interface Step8Props {
   data: SurveyData
   onChange: (patch: Partial<SurveyData>) => void
 }
 
 const PERKS = [
-  { icon: '🚀', title: 'Beta\'ya ilk sen girersin', desc: 'Uygulama çıkmadan önce test et' },
+  { icon: '🚀', title: "Beta'ya ilk sen girersin", desc: 'Uygulama çıkmadan önce test et' },
   { icon: '🎨', title: 'Seçimlerin ürünü şekillendirir', desc: 'Özellik önceliğini sen belirlersin' },
   { icon: '🔕', title: 'Spam yok', desc: 'Sadece önemli gelişmelerde yazarız' },
 ]
 
-export default function StepFour({ data, onChange }: StepFourProps) {
+export default function Step8({ data, onChange }: Step8Props) {
   return (
     <div className="space-y-7">
-      {/* Open feedback */}
+      {/* Magic wand wish */}
       <div className="space-y-3">
         <p className="text-xs font-semibold tracking-widest uppercase text-slate-400">
-          Serbest metin
+          Sihirli değnek 🪄
         </p>
         <p className="text-sm text-slate-500 leading-relaxed">
-          Hiç düşünmediğimiz bir sorun, garip ama önemli bir alışkanlık, ya da{' '}
-          <span className="font-medium text-slate-700">&ldquo;şu olsaydı her şey çözülürdü&rdquo;</span>{' '}
-          dedirten şey.
+          Frawell&apos;de bir şeyi anında değiştirebilseydin — eksik bir özellik, çözülmesi gereken bir
+          sorun ya da{' '}
+          <span className="font-medium text-slate-700">&ldquo;şu olsaydı her şey değişirdi&rdquo;</span>{' '}
+          dedirten şey — ne olurdu?
         </p>
         <textarea
-          id="open-feedback"
+          id="magic-wand-wish"
           rows={4}
-          placeholder="Serbest yaz — her şey değerli 💬"
-          value={data.open_feedback}
-          onChange={(e) => onChange({ open_feedback: e.target.value })}
+          placeholder="Sihirli değneğini salla, hayalindeki özelliği yaz ✨"
+          value={data.magic_wand_wish}
+          onChange={(e) => onChange({ magic_wand_wish: e.target.value })}
           className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50/50 px-4 py-3.5 text-sm text-slate-700 placeholder:text-slate-300 focus:outline-none focus:border-indigo-400 focus:bg-white focus:ring-4 focus:ring-indigo-100 resize-none transition-all"
         />
       </div>

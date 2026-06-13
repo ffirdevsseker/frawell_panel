@@ -2,48 +2,81 @@
 
 import { useState, useEffect } from 'react'
 import { AnimatePresence, motion, Variants } from 'framer-motion'
-import StepZero from './StepZero'
-import StepOne from './StepOne'
-import StepTwo from './StepTwo'
-import StepThree from './StepThree'
-import StepFour from './StepFour'
+import Step0 from './Step0'
+import Step1 from './Step1'
+import Step2 from './Step2'
+import Step3 from './Step3'
+import Step4 from './Step4'
+import Step5 from './Step5'
+import Step6 from './Step6'
+import Step7 from './Step7'
+import Step8 from './Step8'
 import { SurveyData, INITIAL_SURVEY_DATA } from '@/types/survey'
+import { computeTravelerPersona } from '@/lib/persona'
 
 const STEPS = [
   {
     number: 0,
-    emoji: '👤',
-    title: 'Seni tanıyalım',
-    subtitle: 'Anonim · 1 dakika · Cevapların kimseyle paylaşılmaz',
+    emoji: '🧭',
+    title: 'Sen kimsin, kaşif?',
+    subtitle: 'Anonim · 2 dakika · Cevapların kimseyle paylaşılmaz',
     cta: 'Devam et',
   },
   {
     number: 1,
-    emoji: '🗺️',
-    title: 'Gün içinde ne oluyor?',
-    subtitle: 'Bir yerden başka bir yere gittiğinde hangi süreçlerde zorlanıyorsun?',
+    emoji: '🚶',
+    title: 'Hareket tarzın',
+    subtitle: 'Şehri nasıl deneyimlediğini öğrenelim',
     cta: 'Devam et',
   },
   {
     number: 2,
-    emoji: '⚡',
-    title: 'En büyük engelin ne?',
-    subtitle: 'En fazla 2 seçim — seçimlerin özellik önceliğimizi belirleyecek',
+    emoji: '✨',
+    title: 'Seni mutlu eden ne?',
+    subtitle: 'Bir gezide seni asıl mutlu eden şey ne?',
     cta: 'Devam et',
   },
   {
     number: 3,
+    emoji: '🗺️',
+    title: 'Yolda ne oluyor?',
+    subtitle: 'Bir yerden başka bir yere giderken nerede tıkanıyorsun?',
+    cta: 'Devam et',
+  },
+  {
+    number: 4,
+    emoji: '📍',
+    title: 'Mekan seçerken',
+    subtitle: 'Bir mekana karar verirken neler oluyor?',
+    cta: 'Devam et',
+  },
+  {
+    number: 5,
+    emoji: '⚡',
+    title: 'En büyük 2 derdin',
+    subtitle: 'En fazla 2 seçim — seçimlerin özellik önceliğimizi belirleyecek',
+    cta: 'Devam et',
+  },
+  {
+    number: 6,
+    emoji: '🔮',
+    title: "Frawell'i hayal et",
+    subtitle: 'Bunlar gerçek olsa, sence nasıl olur?',
+    cta: 'Devam et',
+  },
+  {
+    number: 7,
     emoji: '🚀',
     title: 'Ne önce gelsin?',
     subtitle: 'Sürükleyerek sırala · En üstteki = en çok istediğin özellik',
     cta: 'Bu sıralamayı gönder',
   },
   {
-    number: 4,
-    emoji: '💬',
-    title: 'Son bir şey',
-    subtitle: 'Aklında çözmemizi istediğin başka bir sorun var mı?',
-    cta: 'Gönder ve bitir',
+    number: 8,
+    emoji: '🪄',
+    title: 'Son istasyon',
+    subtitle: 'Sihirli değneğin olsa ne değiştirirdin?',
+    cta: 'Gönder ve rozetini aç',
   },
 ]
 
@@ -69,7 +102,7 @@ const pageVariants: Variants = {
   }),
 }
 
-const FLOATING_ICONS = ['✈️','🗺️','☕','🏙️','🚇','🍜','🎭','🌅','🧭','🏨']
+const FLOATING_ICONS = ['✈️','🗺️','☕','🏙️','🚇','🍜','🎭','🌅','🧭','🏨','🎮','🏆','✨','📸']
 
 export default function SurveyShell() {
   const [step, setStep] = useState(0)
@@ -99,13 +132,16 @@ export default function SurveyShell() {
   async function submit() {
     setLoading(true)
     setError(null)
+    const persona = computeTravelerPersona(data)
+    const payload: SurveyData = { ...data, traveler_persona: persona.key }
     try {
       const res = await fetch('/api/responses', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
+        body: JSON.stringify(payload),
       })
       if (!res.ok) throw new Error('Gönderim başarısız')
+      setData(payload)
       setSubmitted(true)
     } catch {
       setError('Bir hata oluştu, lütfen tekrar dene.')
@@ -114,69 +150,83 @@ export default function SurveyShell() {
     }
   }
 
-  // ── Thank you screen ──
+  // ── Thank you / Gezgin Tipi reveal screen ──
   if (submitted) {
+    const persona = computeTravelerPersona(data)
     return (
-      <div className="survey-bg min-h-screen flex items-center justify-center px-4">
+      <div className="survey-bg min-h-screen flex items-center justify-center px-4 py-10 relative overflow-hidden">
+        {mounted && FLOATING_ICONS.map((icon, i) => (
+          <motion.div
+            key={icon}
+            className="absolute text-2xl pointer-events-none select-none opacity-[0.07]"
+            style={{ left: `${(i * 137.5) % 100}%`, top: `${(i * 73) % 100}%` }}
+            animate={{ y: [0, -20, 0], rotate: [-5, 5, -5] }}
+            transition={{ duration: 4 + i * 0.7, repeat: Infinity, delay: i * 0.4, ease: 'easeInOut' }}
+          >
+            {icon}
+          </motion.div>
+        ))}
+
         <motion.div
           initial={{ opacity: 0, scale: 0.85, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="glass rounded-3xl p-10 max-w-md w-full text-center shadow-2xl"
+          className="glass rounded-3xl p-8 sm:p-10 max-w-md w-full text-center shadow-2xl relative z-10"
         >
+          {/* Persona badge */}
+          <div className="persona-badge persona-glow mx-auto mb-5 w-24 h-24 rounded-full bg-gradient-to-br from-indigo-500 via-violet-500 to-teal-400 flex items-center justify-center text-5xl shadow-xl">
+            {persona.emoji}
+          </div>
+
           <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.3, type: 'spring', stiffness: 200 }}
-            className="text-6xl mb-6"
-          >
-            🎉
-          </motion.div>
-          <motion.h2
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-            className="text-2xl font-bold text-slate-900 mb-3"
+            transition={{ delay: 0.3 }}
           >
-            Süpersin, teşekkürler!
-          </motion.h2>
-          <motion.p
+            <p className="text-[11px] font-semibold tracking-widest uppercase text-indigo-400 mb-1">
+              Gezgin Tipin
+            </p>
+            <h2 className="text-2xl font-bold text-slate-900 mb-1">{persona.title}</h2>
+            <p className="text-sm font-medium gradient-text-teal mb-4">{persona.tagline}</p>
+            <p className="text-slate-500 text-sm leading-relaxed">{persona.description}</p>
+          </motion.div>
+
+          <motion.hr
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+            className="border-slate-100 my-6"
+          />
+
+          <motion.h3
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
+            className="text-lg font-bold text-slate-900 mb-2"
+          >
+            Süpersin, teşekkürler! 🎉
+          </motion.h3>
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6 }}
             className="text-slate-500 text-sm leading-relaxed mb-6"
           >
             Cevapların Frawell&apos;i şekillendiriyor. Şehri gerçekten anlayan, seni
             gezdiren bir uygulama yapıyoruz — ve sen de bir parçasısın.
           </motion.p>
+
           {data.email && (
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
+              transition={{ delay: 0.7 }}
               className="inline-flex items-center gap-2 text-xs font-medium text-indigo-700 bg-indigo-50 border border-indigo-200 rounded-full px-4 py-2"
             >
               <span>📬</span>
               <span>{data.email} adresine haber vereceğiz</span>
             </motion.div>
           )}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.8 }}
-            className="mt-8 flex justify-center gap-3"
-          >
-            {['✈️','🗺️','☕','🏙️','🌅'].map((icon, i) => (
-              <motion.span
-                key={icon}
-                animate={{ y: [0, -8, 0] }}
-                transition={{ delay: i * 0.15, repeat: Infinity, duration: 2, ease: 'easeInOut' }}
-                className="text-xl"
-              >
-                {icon}
-              </motion.span>
-            ))}
-          </motion.div>
         </motion.div>
       </div>
     )
@@ -219,13 +269,32 @@ export default function SurveyShell() {
           <span className="text-sm font-semibold text-slate-700">Frawell</span>
         </div>
         <div className="text-xs text-slate-400 font-medium">
-          {step + 1} / {TOTAL}
+          Durak {step + 1} / {TOTAL}
         </div>
       </div>
 
       {/* Main card */}
-      <div className="relative z-10 flex justify-center px-4 pt-4 pb-16">
+      <div className="relative z-10 flex justify-center px-4 pt-2 pb-16">
         <div className="w-full max-w-xl">
+          {/* Journey progress — "Gezgin Rotası" */}
+          <div className="mb-4 px-2">
+            <div className="journey-track">
+              <div className="journey-line" />
+              <div
+                className="journey-line-fill"
+                style={{ width: `${(step / (TOTAL - 1)) * 100}%` }}
+              />
+              {STEPS.map((s, i) => (
+                <div
+                  key={s.number}
+                  className={`journey-stop${i < step ? ' done' : i === step ? ' active' : ''}`}
+                >
+                  {i < step ? '✓' : s.emoji}
+                </div>
+              ))}
+            </div>
+          </div>
+
           {/* Card */}
           <motion.div
             layout
@@ -272,11 +341,15 @@ export default function SurveyShell() {
                 exit="exit"
                 className="px-8 py-7"
               >
-                {step === 0 && <StepZero data={data} onChange={patch} />}
-                {step === 1 && <StepOne data={data} onChange={patch} />}
-                {step === 2 && <StepTwo data={data} onChange={patch} />}
-                {step === 3 && <StepThree data={data} onChange={patch} />}
-                {step === 4 && <StepFour data={data} onChange={patch} />}
+                {step === 0 && <Step0 data={data} onChange={patch} />}
+                {step === 1 && <Step1 data={data} onChange={patch} />}
+                {step === 2 && <Step2 data={data} onChange={patch} />}
+                {step === 3 && <Step3 data={data} onChange={patch} />}
+                {step === 4 && <Step4 data={data} onChange={patch} />}
+                {step === 5 && <Step5 data={data} onChange={patch} />}
+                {step === 6 && <Step6 data={data} onChange={patch} />}
+                {step === 7 && <Step7 data={data} onChange={patch} />}
+                {step === 8 && <Step8 data={data} onChange={patch} />}
               </motion.div>
             </AnimatePresence>
 

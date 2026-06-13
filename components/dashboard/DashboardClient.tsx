@@ -15,9 +15,12 @@ interface DbResponse {
   age_range: string | null
   gender: string | null
   city: string | null
+  travel_companions: string | null
   outings_per_week: number | null
   app_count: string | null
   apps_used: string[] | null
+  travel_motivations: string[] | null
+  memorable_moment: string | null
   decision_method: string[] | null
   route_problems: string[] | null
   venue_quit: string[] | null
@@ -25,9 +28,15 @@ interface DbResponse {
   missing_filters: string[] | null
   experience_note: string | null
   top_problems: string[] | null
+  ai_guide_appeal: string | null
+  personalization_appeal: string | null
+  gamification_appeal: string | null
+  avatar_quest_appeal: string | null
+  local_deals_appeal: string | null
   feature_ranking: string[] | null
-  open_feedback: string | null
+  magic_wand_wish: string | null
   email: string | null
+  traveler_persona: string | null
 }
 
 /* ── Helpers ── */
@@ -45,7 +54,7 @@ function countArray(rows: DbResponse[], field: keyof DbResponse) {
 }
 
 function computeFeatureRanking(rows: DbResponse[]) {
-  const N = 6
+  const N = 7
   const scores: Record<string, number> = {}
   for (const row of rows) {
     if (!row.feature_ranking) continue
@@ -128,8 +137,8 @@ export default function DashboardClient() {
   const today = new Date()
   const todayCount = rows.filter((r) => isSameDay(new Date(r.created_at), today)).length
   const emails = [...new Set(rows.map((r) => r.email).filter(Boolean) as string[])]
-  const openTexts = rows.filter((r) => r.open_feedback?.trim()).map((r) => ({
-    id: r.id, text: r.open_feedback!, created_at: r.created_at,
+  const openTexts = rows.filter((r) => r.magic_wand_wish?.trim()).map((r) => ({
+    id: r.id, text: r.magic_wand_wish!, created_at: r.created_at,
   }))
 
   const ageData = countArray(rows, 'age_range')
@@ -183,8 +192,8 @@ export default function DashboardClient() {
           delay={0.16}
         />
         <StatCard
-          icon="💬"
-          label="Açık Yanıt"
+          icon="🪄"
+          label="Sihirli Dilek"
           value={openTexts.length}
           sub="serbest metin"
           gradient="from-amber-500 to-orange-600"

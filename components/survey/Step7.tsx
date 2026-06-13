@@ -20,7 +20,7 @@ import { CSS } from '@dnd-kit/utilities'
 import { motion } from 'framer-motion'
 import { SurveyData } from '@/types/survey'
 
-interface StepThreeProps {
+interface Step7Props {
   data: SurveyData
   onChange: (patch: Partial<SurveyData>) => void
 }
@@ -32,6 +32,7 @@ const RANK_COLORS = [
   'from-indigo-400 to-violet-500',
   'from-violet-400 to-purple-500',
   'from-slate-300 to-slate-400',
+  'from-teal-400 to-cyan-500',
 ]
 
 const RANK_BG = [
@@ -41,6 +42,7 @@ const RANK_BG = [
   'bg-indigo-50 border-indigo-200',
   'bg-violet-50 border-violet-200',
   'bg-slate-50 border-slate-200',
+  'bg-teal-50 border-teal-200',
 ]
 
 function SortableItem({
@@ -78,7 +80,7 @@ function SortableItem({
           : `${RANK_BG[Math.min(rank - 1, RANK_BG.length - 1)]} hover:shadow-lg`}
       `}
     >
-      {/* Sürükleme Tutamacı (Artık daha geniş ve belirgin) */}
+      {/* Sürükleme tutamacı */}
       <div
         {...attributes}
         {...listeners}
@@ -108,7 +110,7 @@ function SortableItem({
         <span className="flex-1 text-sm text-slate-700 font-medium leading-snug">{id}</span>
       </div>
 
-      {/* Oklar (Tıklanabilir ve drag olayından bağımsız) */}
+      {/* Oklar */}
       <div className="flex items-center gap-1 shrink-0 ml-1">
         <button
           onClick={(e) => { e.preventDefault(); e.stopPropagation(); onMoveUp(); }}
@@ -135,7 +137,7 @@ function SortableItem({
   )
 }
 
-export default function StepThree({ data, onChange }: StepThreeProps) {
+export default function Step7({ data, onChange }: Step7Props) {
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -193,9 +195,9 @@ export default function StepThree({ data, onChange }: StepThreeProps) {
                   show: { opacity: 1, x: 0, transition: { duration: 0.25 } },
                 }}
               >
-                <SortableItem 
-                  id={feature} 
-                  rank={i + 1} 
+                <SortableItem
+                  id={feature}
+                  rank={i + 1}
                   isFirst={i === 0}
                   isLast={i === data.feature_ranking.length - 1}
                   onMoveUp={() => moveItem(i, 'up')}

@@ -3,14 +3,11 @@
 import { motion } from 'framer-motion'
 import { SurveyData } from '@/types/survey'
 
-interface StepZeroProps {
+interface Step1Props {
   data: SurveyData
   onChange: (patch: Partial<SurveyData>) => void
 }
 
-const AGE_RANGES = ['13-17', '18-24', '25-34', '35-44', '45+'] as const
-const GENDERS = ['Kadın', 'Erkek', 'Belirtmek istemiyorum'] as const
-const CITIES = ['İstanbul', 'İzmir', 'Ankara', 'Bursa', 'Antalya', 'Diğer'] as const
 const APP_COUNTS = ['Sadece 1', '2-3 uygulama', '4 veya daha fazla'] as const
 const APPS = [
   { label: 'Google Maps', icon: '🗺️' },
@@ -40,14 +37,14 @@ function toggle<T>(arr: T[], item: T): T[] {
 
 const container = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.04 } },
+  show: { transition: { staggerChildren: 0.05 } },
 }
 const item = {
   hidden: { opacity: 0, y: 8 },
   show: { opacity: 1, y: 0, transition: { duration: 0.2 } },
 }
 
-export default function StepZero({ data, onChange }: StepZeroProps) {
+export default function Step1({ data, onChange }: Step1Props) {
   const sliderPct = (data.outings_per_week / 7) * 100
 
   return (
@@ -57,60 +54,6 @@ export default function StepZero({ data, onChange }: StepZeroProps) {
       animate="show"
       className="space-y-7"
     >
-      {/* Age */}
-      <motion.div variants={item}>
-        <Section label="Yaş aralığın">
-          <div className="flex flex-wrap gap-2">
-            {AGE_RANGES.map((r) => (
-              <button
-                key={r}
-                id={`age-${r}`}
-                onClick={() => onChange({ age_range: r })}
-                className={`chip${data.age_range === r ? ' selected' : ''}`}
-              >
-                {r}
-              </button>
-            ))}
-          </div>
-        </Section>
-      </motion.div>
-
-      {/* Gender */}
-      <motion.div variants={item}>
-        <Section label="Cinsiyet (opsiyonel)">
-          <div className="flex flex-wrap gap-2">
-            {GENDERS.map((g) => (
-              <button
-                key={g}
-                id={`gender-${g.toLowerCase().replace(/\s/g, '-')}`}
-                onClick={() => onChange({ gender: g })}
-                className={`chip${data.gender === g ? ' selected' : ''}`}
-              >
-                {g}
-              </button>
-            ))}
-          </div>
-        </Section>
-      </motion.div>
-
-      {/* City */}
-      <motion.div variants={item}>
-        <Section label="Bulunduğun şehir">
-          <div className="flex flex-wrap gap-2">
-            {CITIES.map((c) => (
-              <button
-                key={c}
-                id={`city-${c.toLowerCase()}`}
-                onClick={() => onChange({ city: c })}
-                className={`chip${data.city === c ? ' selected' : ''}`}
-              >
-                {c}
-              </button>
-            ))}
-          </div>
-        </Section>
-      </motion.div>
-
       {/* Slider */}
       <motion.div variants={item}>
         <Section label="Haftada kaç kez dışarı çıkarsın?">
@@ -118,9 +61,7 @@ export default function StepZero({ data, onChange }: StepZeroProps) {
             <div className="flex items-center justify-between text-xs text-slate-400">
               <span>Neredeyse hiç</span>
               <span className="font-bold text-indigo-600 text-sm">
-                {data.outings_per_week % 1 === 0
-                  ? `${data.outings_per_week} gün`
-                  : `${data.outings_per_week} gün`}
+                {data.outings_per_week} gün
               </span>
             </div>
             <input

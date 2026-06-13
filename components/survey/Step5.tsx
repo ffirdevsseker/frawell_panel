@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import { SurveyData } from '@/types/survey'
 
-interface StepTwoProps {
+interface Step5Props {
   data: SurveyData
   onChange: (patch: Partial<SurveyData>) => void
 }
@@ -12,8 +12,6 @@ const PROBLEMS = [
   {
     id: 'platform-kaosasi',
     emoji: '🗺️',
-    color: 'from-blue-500/10 to-indigo-500/10',
-    border: 'border-blue-200',
     selectedBorder: 'border-indigo-500',
     selectedBg: 'from-indigo-50 to-blue-50',
     title: 'Platform karmaşası',
@@ -22,8 +20,6 @@ const PROBLEMS = [
   {
     id: 'planlama-yorgunlugu',
     emoji: '😫',
-    color: 'from-amber-500/10 to-orange-500/10',
-    border: 'border-amber-200',
     selectedBorder: 'border-amber-500',
     selectedBg: 'from-amber-50 to-orange-50',
     title: 'Planlama yorgunluğu',
@@ -32,8 +28,6 @@ const PROBLEMS = [
   {
     id: 'grup-koordinasyonu',
     emoji: '👥',
-    color: 'from-violet-500/10 to-purple-500/10',
-    border: 'border-violet-200',
     selectedBorder: 'border-violet-500',
     selectedBg: 'from-violet-50 to-purple-50',
     title: 'Grup koordinasyonu',
@@ -42,8 +36,6 @@ const PROBLEMS = [
   {
     id: 'ilham-eksikligi',
     emoji: '💡',
-    color: 'from-yellow-500/10 to-amber-500/10',
-    border: 'border-yellow-200',
     selectedBorder: 'border-yellow-500',
     selectedBg: 'from-yellow-50 to-amber-50',
     title: 'İlham eksikliği',
@@ -52,8 +44,6 @@ const PROBLEMS = [
   {
     id: 'butce-takibi',
     emoji: '💸',
-    color: 'from-emerald-500/10 to-teal-500/10',
-    border: 'border-emerald-200',
     selectedBorder: 'border-emerald-500',
     selectedBg: 'from-emerald-50 to-teal-50',
     title: 'Bütçe takibi',
@@ -62,8 +52,6 @@ const PROBLEMS = [
   {
     id: 'kisisellestime-yok',
     emoji: '🎯',
-    color: 'from-rose-500/10 to-pink-500/10',
-    border: 'border-rose-200',
     selectedBorder: 'border-rose-500',
     selectedBg: 'from-rose-50 to-pink-50',
     title: 'Kişiselleştirme yok',
@@ -80,7 +68,7 @@ const cardVariant = {
   show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.3 } },
 }
 
-export default function StepTwo({ data, onChange }: StepTwoProps) {
+export default function Step5({ data, onChange }: Step5Props) {
   const selected = data.top_problems
 
   function toggle(id: string) {

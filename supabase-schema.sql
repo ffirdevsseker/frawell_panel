@@ -5,31 +5,50 @@ CREATE TABLE IF NOT EXISTS responses (
   id               uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   created_at       timestamptz DEFAULT now(),
 
-  -- Step 0: Demografi
+  -- Durak 0: Kaşif kimliği
   age_range        text,
   gender           text,
   city             text,
+  travel_companions text,
+
+  -- Durak 1: Hareket tarzın
   outings_per_week float,
   app_count        text,
   apps_used        text[],
 
-  -- Step 1: Gün içi pain points
+  -- Durak 2: Seni mutlu eden ne?
+  travel_motivations text[],
+  memorable_moment text,
+
+  -- Durak 3: Yolda ne oluyor?
   decision_method  text[],
   route_problems   text[],
-  venue_quit       text[],
   transport_pref   text[],
+
+  -- Durak 4: Mekan seçerken
+  venue_quit       text[],
   missing_filters  text[],
   experience_note  text,
 
-  -- Step 2: En büyük problem
+  -- Durak 5: En büyük 2 derdin
   top_problems     text[],
 
-  -- Step 3: Özellik sıralaması
+  -- Durak 6: Frawell'i hayal et
+  ai_guide_appeal        text,
+  personalization_appeal text,
+  gamification_appeal    text,
+  avatar_quest_appeal    text,
+  local_deals_appeal     text,
+
+  -- Durak 7: Özellik sıralaması
   feature_ranking  text[],
 
-  -- Step 4: Açık metin + e-posta
-  open_feedback    text,
-  email            text
+  -- Durak 8: Son istasyon
+  magic_wand_wish  text,
+  email            text,
+
+  -- Gönderim anında hesaplanan "Gezgin Tipi" rozeti
+  traveler_persona text
 );
 
 -- RLS: Herkes insert yapabilsin (anonim anket)
