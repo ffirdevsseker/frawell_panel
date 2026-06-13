@@ -81,7 +81,11 @@ export function HBarChart({ title, subtitle, data }: HBarChartProps) {
           <Tooltip
             cursor={CURSOR_STYLE}
             contentStyle={TOOLTIP_STYLE}
+<<<<<<< HEAD
             formatter={(v) => [`${v} yanıt`, '']}
+=======
+            formatter={(v: any) => [`${v ?? 0} yanıt`, '']}
+>>>>>>> 5beb984da37d89c27fc33dc32811ac99ef94eabb
           />
           <Bar dataKey="value" radius={[0, 8, 8, 0]} barSize={22} background={{ fill: 'rgba(255,255,255,0.02)', radius: 8 }}>
             {sorted.map((entry, i) => (
@@ -133,7 +137,7 @@ export function VBarChart({ title, subtitle, data }: VBarChartProps) {
           <Tooltip
             cursor={CURSOR_STYLE}
             contentStyle={TOOLTIP_STYLE}
-            formatter={(v: number) => [`${v} kişi`, '']}
+            formatter={(v: any) => [`${v ?? 0} kişi`, '']}
           />
           <Bar dataKey="value" radius={[8, 8, 0, 0]} barSize={36}>
             {data.map((_, i) => (
