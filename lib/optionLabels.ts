@@ -17,6 +17,7 @@ const EN_LABELS: Record<string, string> = {
   'Ankara': 'Ankara',
   'Bursa': 'Bursa',
   'Antalya': 'Antalya',
+  'Yurt Dışı': 'Abroad',
   'Diğer': 'Other',
 
   // Step0 — travel companions

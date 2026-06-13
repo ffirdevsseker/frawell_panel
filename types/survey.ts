@@ -1,6 +1,6 @@
 export type AgeRange = '13-17' | '18-24' | '25-34' | '35-44' | '45+'
 export type Gender = 'Kadın' | 'Erkek' | 'Belirtmek istemiyorum'
-export type City = 'İstanbul' | 'İzmir' | 'Ankara' | 'Bursa' | 'Antalya' | 'Diğer'
+export type City = 'İstanbul' | 'İzmir' | 'Ankara' | 'Bursa' | 'Antalya' | 'Yurt Dışı' | 'Diğer'
 export type AppCount = 'Sadece 1' | '2-3 uygulama' | '4 veya daha fazla'
 export type TravelCompanion =
   | 'Tek başıma'

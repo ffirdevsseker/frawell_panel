@@ -13,7 +13,7 @@ interface Step0Props {
 
 const AGE_RANGES = ['13-17', '18-24', '25-34', '35-44', '45+'] as const
 const GENDERS = ['Kadın', 'Erkek', 'Belirtmek istemiyorum'] as const
-const CITIES = ['İstanbul', 'İzmir', 'Ankara', 'Bursa', 'Antalya', 'Diğer'] as const
+const CITIES = ['İstanbul', 'İzmir', 'Ankara', 'Bursa', 'Antalya', 'Yurt Dışı', 'Diğer'] as const
 const COMPANIONS: { label: TravelCompanion; icon: string }[] = [
   { label: 'Tek başıma', icon: '🧍' },
   { label: 'Arkadaşlarımla', icon: '👯' },
@@ -95,7 +95,7 @@ export default function Step0({ data, onChange }: Step0Props) {
             {CITIES.map((c) => (
               <button
                 key={c}
-                id={`city-${c.toLowerCase()}`}
+                id={`city-${c.toLowerCase().replace(/\s/g, '-')}`}
                 onClick={() => onChange({ city: c })}
                 className={`chip${data.city === c ? ' selected' : ''}`}
               >

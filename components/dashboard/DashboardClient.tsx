@@ -2,7 +2,9 @@
 
 import { useEffect, useState, useCallback } from 'react'
 import { motion } from 'framer-motion'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
+import { Locale } from '@/i18n/config'
+import { getOptionLabel } from '@/lib/optionLabels'
 import { supabase } from '@/lib/supabase'
 import StatCard from '@/components/dashboard/StatCard'
 import { HBarChart, VBarChart, PieChartCard } from '@/components/dashboard/Charts'
@@ -83,6 +85,7 @@ function Skeleton({ className = '' }: { className?: string }) {
 
 export default function DashboardClient() {
   const t = useTranslations('dashboard')
+  const locale = useLocale() as Locale
   const [rows, setRows] = useState<DbResponse[]>([])
   const [loading, setLoading] = useState(true)
   const [newPing, setNewPing] = useState(false)
@@ -135,7 +138,7 @@ export default function DashboardClient() {
   }))
 
   const ageData = countArray(rows, 'age_range')
-  const cityData = countArray(rows, 'city')
+  const cityData = countArray(rows, 'city').map((c) => ({ ...c, name: getOptionLabel(c.name, locale) }))
   const appsData = countArray(rows, 'apps_used')
   const problemLabels = t.raw('problemLabels') as Record<string, string>
   const problemsData = countArray(rows, 'top_problems').map((p) => ({
