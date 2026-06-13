@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, motion, Variants } from 'framer-motion'
 import StepZero from './StepZero'
 import StepOne from './StepOne'
 import StepTwo from './StepTwo'
@@ -49,7 +49,7 @@ const STEPS = [
 
 const TOTAL = STEPS.length
 
-const pageVariants = {
+const pageVariants: Variants = {
   enter: (dir: number) => ({
     x: dir > 0 ? 60 : -60,
     opacity: 0,

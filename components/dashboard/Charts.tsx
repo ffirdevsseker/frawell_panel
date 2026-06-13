@@ -81,11 +81,7 @@ export function HBarChart({ title, subtitle, data }: HBarChartProps) {
           <Tooltip
             cursor={CURSOR_STYLE}
             contentStyle={TOOLTIP_STYLE}
-<<<<<<< HEAD
-            formatter={(v) => [`${v} yanıt`, '']}
-=======
             formatter={(v: any) => [`${v ?? 0} yanıt`, '']}
->>>>>>> 5beb984da37d89c27fc33dc32811ac99ef94eabb
           />
           <Bar dataKey="value" radius={[0, 8, 8, 0]} barSize={22} background={{ fill: 'rgba(255,255,255,0.02)', radius: 8 }}>
             {sorted.map((entry, i) => (
@@ -194,7 +190,7 @@ export function PieChartCard({ title, subtitle, data }: PieChartCardProps) {
           </Pie>
           <Tooltip
             contentStyle={TOOLTIP_STYLE}
-            formatter={(v: number, name: string) => [`${v} kişi`, name]}
+            formatter={(v: any, name: any) => [`${v ?? 0} kişi`, name]}
           />
           <Legend
             wrapperStyle={{ fontSize: 11, color: '#94a3b8', paddingTop: 8 }}
